@@ -61,7 +61,7 @@
                         <id>default-cli</id>
                         <configuration>
                             <mainClass>
-                                com.example.imagemanagerproject/com.example.imagemanagerproject.HelloApplication
+                                com.example.imagemanagerproject/com.example.imagemanagerproject.MainApp
                             </mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>
