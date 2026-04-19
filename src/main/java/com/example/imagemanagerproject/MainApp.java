@@ -1,11 +1,9 @@
 package com.example.imagemanagerproject;
 
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
+
 import javafx.stage.Stage;
 
 import javax.swing.*;
@@ -13,18 +11,9 @@ import javax.swing.*;
 public class MainApp extends Application {
 
     @Override
-    public void start(Stage stage) {
-        BorderPane root = new BorderPane();
-        Button btnOuvrir = new Button("Ouvrir image");
-        Label labelStatut = new Label("Aucune image ouverte");
-        HBox barreHaut = new HBox();
-        barreHaut.setSpacing(10);
-        barreHaut.getChildren().add(btnOuvrir);
-        barreHaut.getChildren().add(labelStatut);
-        //on met la barre en haut
-        root.setTop(barreHaut);
-
-        Scene scene = new Scene(root, 800, 600);
+    public void start(Stage stage) throws Exception{
+        FXMLLoader fxmlLoader = new FXMLLoader(MainApp.class.getResource("main-view.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 800, 600);
         stage.setTitle("Gestionnaire d'Images");
         stage.setScene(scene);
         stage.show();
