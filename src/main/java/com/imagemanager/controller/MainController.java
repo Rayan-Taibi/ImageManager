@@ -31,9 +31,46 @@ public class MainController {
         labelStatut.setText("Image chargée : " + selectedFile.getName());
     }
 
-    private void handleRemoveImage(){
-        if()
+    @FXML
+    protected void RotationDroite() {
+        if (imageView.getImage() == null) {
+            labelStatut.setText("Charge d'abord une image.");
+            return;
+        }
+
+        imageView.setRotate(imageView.getRotate() + 90);
+        labelStatut.setText("Rotation de +90 appliquee.");
     }
 
+    @FXML
+    protected void RotateGauche() {
+        if (imageView.getImage() == null) {
+            labelStatut.setText("Charge d'abord une image.");
+            return;
+        }
+
+        imageView.setRotate(imageView.getRotate() - 90);
+        labelStatut.setText("Rotation de -90 appliquee.");
+    }
+
+    // symmetry controllers
+    @FXML
+    protected void SymmetrieHorizontale() {
+        if (imageView.getImage() != null) {
+            // Si c'est déjà à -1, on repasse à 1 (et vice versa)
+            double currentScale = imageView.getScaleX();
+            imageView.setScaleX(currentScale * -1);
+            labelStatut.setText("Effet miroir horizontal appliqué.");
+        }
+    }
+    
+    @FXML
+    protected void SymmetrieVerticale() {
+        if (imageView.getImage() != null) {
+            double currentScale = imageView.getScaleY();
+            imageView.setScaleY(currentScale * -1);
+            labelStatut.setText("Effet miroir vertical appliqué.");
+        }
+    }
 
 }

@@ -9,6 +9,10 @@
     <top>
         <HBox spacing="10" style="-fx-padding: 10;">
             <Button text="Ouvrir image" onAction="#handleOpenImage"/>
+            <Button text="Rotation -90" onAction="#RotateGauche"/>
+            <Button text="Rotation +90" onAction="#RotationDroite"/>
+            <Button text="Miroir horizontal" onAction="#SymmetrieHorizontale"/>
+            <Button text="Miroir vertical" onAction="#SymmetrieVerticale"/>
             <Label fx:id="labelStatut" text="Aucune image ouverte"/>
         </HBox>
     </top>

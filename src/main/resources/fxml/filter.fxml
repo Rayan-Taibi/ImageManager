@@ -8,4 +8,9 @@
     <center>
         <Label text="Filter view (TODO)"/>
     </center>
+    <HBox spacing="10" alignment="CENTER">
+           <Button text="⟲ -90°" onAction="#handleRotateLeft"/>
+           <Button text="⟳ +90°" onAction="#handleRotateRight"/>
+    </HBox>
+
 </BorderPane>
