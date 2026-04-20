@@ -30,4 +30,10 @@ public class MainController {
         imageView.setImage(image);
         labelStatut.setText("Image chargée : " + selectedFile.getName());
     }
+
+    private void handleRemoveImage(){
+        if()
+    }
+
+
 }
