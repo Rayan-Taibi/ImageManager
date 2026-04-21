@@ -36,9 +36,6 @@
                 <Label text="Edge Detection:" style="-fx-font-weight: bold;"/>
                 <Button text="Prewitt" onAction="#handlePrewittFilter" prefWidth="80"/>
                 <Separator orientation="VERTICAL"/>
-                <Label text="Legacy:" style="-fx-font-weight: bold;"/>
-                <Button text="Encryption" onAction="#handleEncryptionFilter" prefWidth="90"/>
-                <Separator orientation="VERTICAL"/>
                 <Button text="Reset" onAction="#handleReset" style="-fx-padding: 5;" prefWidth="70"/>
                 <Button text="Save" onAction="#handleSaveImage" style="-fx-padding: 5;" prefWidth="70"/>
             </HBox>

@@ -96,20 +96,6 @@ public class FilterController {
         updateStatus("✓ Prewitt Edge Detection applied");
     }
 
-    // ===== LEGACY FILTER =====
-
-    @FXML
-    public void handleEncryptionFilter() {
-        if (imageView == null || imageView.getImage() == null) {
-            updateStatus("Error: No image loaded");
-            return;
-        }
-        Filter filter = new EncryptionFilter();
-        Image filtered = filter.apply(imageView.getImage());
-        imageView.setImage(filtered);
-        updateStatus("✓ Encryption filter applied");
-    }
-
     // ===== UTILITY =====
 
     @FXML

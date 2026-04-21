@@ -121,13 +121,6 @@ public class MainController {
     }
 
     @FXML
-    protected void handleEncryptionFilter() {
-        if (filterController != null) {
-            filterController.handleEncryptionFilter();
-        }
-    }
-
-    @FXML
     protected void handleReset() {
         if (filterController != null) {
             filterController.handleReset();
