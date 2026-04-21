@@ -1,53 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.imagemanager.controller.FilterController">
-    
-    <top>
-        <VBox spacing="10" style="-fx-padding: 10;">
-            <Label text="Filters" style="-fx-font-size: 14; -fx-font-weight: bold;"/>
-            <Label fx:id="statusLabel" text="Select an image and choose a filter" />
-        </VBox>
-    </top>
-    
-    <center>
-        <ScrollPane fitToWidth="true">
-            <VBox spacing="10" style="-fx-padding: 10;">
-                
-                <!-- Color Filters Section -->
-                <Label text="Color Filters" style="-fx-font-size: 12; -fx-font-weight: bold;" />
-                <HBox spacing="10" wrapText="true">
-                    <Button text="Sépia" onAction="#handleSepiaFilter" prefWidth="100" />
-                    <Button text="Noir &amp; Blanc" onAction="#handleNoirBlancFilter" prefWidth="100" />
-                    <Button text="RGB Swap" onAction="#handleRGBSwapFilter" prefWidth="100" />
-                </HBox>
-                
-                <!-- Edge Detection Section -->
-                <Separator />
-                <Label text="Edge Detection" style="-fx-font-size: 12; -fx-font-weight: bold;" />
-                <HBox spacing="10">
-                    <Button text="Prewitt Edge Detection" onAction="#handlePrewittFilter" prefWidth="150" />
-                </HBox>
-                
-                <!-- Legacy Filter -->
-                <Separator />
-                <Label text="Legacy" style="-fx-font-size: 12; -fx-font-weight: bold;" />
-                <HBox spacing="10">
-                    <Button text="Encryption (Legacy)" onAction="#handleEncryptionFilter" prefWidth="150" />
-                </HBox>
-                
-            </VBox>
-        </ScrollPane>
-    </center>
-    
-    <bottom>
-        <HBox spacing="10" style="-fx-padding: 10;" alignment="CENTER">
-            <Button text="Reset to Original" onAction="#handleReset" style="-fx-font-size: 11;" />
-            <Button text="Save Filtered Image" onAction="#handleSaveImage" style="-fx-font-size: 11;" />
-        </HBox>
-    </bottom>
-    
-</BorderPane>
+<VBox prefWidth="200" spacing="15" style="-fx-padding: 15; -fx-background-color: #eeeeee; -fx-border-color: #cccccc; -fx-border-width: 0 0 0 1;"
+      xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.imagemanager.controller.FilterController">
+
+    <Label text="PANNEAU FILTRES" style="-fx-font-size: 14; -fx-font-weight: bold;"/>
+
+    <Separator />
+
+    <VBox spacing="8">
+        <Label text="Couleurs" style="-fx-font-weight: bold; -fx-text-fill: #444444;" />
+        <Button text="Sépia" onAction="#handleSepiaFilter" prefWidth="170" />
+        <Button text="Noir &amp; Blanc" onAction="#handleNoirBlancFilter" prefWidth="170" />
+        <Button text="RGB Swap" onAction="#handleRGBSwapFilter" prefWidth="170" />
+    </VBox>
+
+    <Separator />
+
+    <VBox spacing="8">
+        <Label text="Détection &amp; Sécurité" style="-fx-font-weight: bold; -fx-text-fill: #444444;" />
+        <Button text="Contours (Prewitt)" onAction="#handlePrewittFilter" prefWidth="170" />
+    </VBox>
+
+    <Region VBox.vgrow="ALWAYS" /> <Separator />
+
+    <VBox spacing="10">
+        <Button text="Réinitialiser" onAction="#handleReset" prefWidth="170" style="-fx-background-color: #ff9999;" />
+    </VBox>
+
+</VBox>

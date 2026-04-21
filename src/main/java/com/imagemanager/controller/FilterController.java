@@ -9,8 +9,6 @@ import javafx.stage.FileChooser;
 
 import com.imagemanager.model.filter.*;
 
-import java.io.File;
-
 public class FilterController {
 
     @FXML
@@ -107,35 +105,6 @@ public class FilterController {
         imageView.setImage(originalImage);
         updateStatus("✓ Reset to original image");
     }
-
-    @FXML
-    public void handleSaveImage() {
-        if (imageView == null || imageView.getImage() == null) {
-            updateStatus("Error: No image to save");
-            return;
-        }
-        
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Save Filtered Image");
-        fileChooser.getExtensionFilters().addAll(
-            new FileChooser.ExtensionFilter("PNG Images", "*.png"),
-            new FileChooser.ExtensionFilter("JPEG Images", "*.jpg", "*.jpeg"),
-            new FileChooser.ExtensionFilter("All Files", "*.*")
-        );
-        
-        File file = fileChooser.showSaveDialog(imageView.getScene().getWindow());
-        if (file != null) {
-            try {
-                // TODO: Implement image saving using WritableImage and ImageIO
-                updateStatus("✓ Image saved to: " + file.getName());
-            } catch (Exception e) {
-                updateStatus("Error saving image: " + e.getMessage());
-            }
-        }
-    }
-
-    // ===== HELPER METHODS =====
-
     private void updateStatus(String message) {
         if (statusLabel != null) {
             statusLabel.setText(message);

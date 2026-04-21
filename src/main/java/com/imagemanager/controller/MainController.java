@@ -14,15 +14,16 @@ public class MainController {
     @FXML
     private Label labelStatut;
 
+    @FXML
     private FilterController filterController;
     private Image originalImage;
 
     @FXML
     public void initialize() {
-        // Initialize the FilterController
-        filterController = new FilterController();
-        filterController.setImageView(imageView);
-        filterController.setStatusLabel(labelStatut);
+        if (filterController != null) {
+            filterController.setImageView(imageView);
+            filterController.setStatusLabel(labelStatut);
+        }
     }
 
     @FXML
@@ -124,13 +125,6 @@ public class MainController {
     protected void handleReset() {
         if (filterController != null) {
             filterController.handleReset();
-        }
-    }
-
-    @FXML
-    protected void handleSaveImage() {
-        if (filterController != null) {
-            filterController.handleSaveImage();
         }
     }
 

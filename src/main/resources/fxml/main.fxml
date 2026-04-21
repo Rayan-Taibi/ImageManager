@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
@@ -8,43 +7,36 @@
             fx:controller="com.imagemanager.controller.MainController">
     <top>
         <VBox spacing="0">
-            <!-- Image Navigation Bar -->
-            <HBox spacing="10" style="-fx-padding: 10;">
-                <Button text="Ouvrir image" onAction="#handleOpenImage"/>
-                <Label fx:id="labelStatut" text="Aucune image ouverte"/>
-            </HBox>
-            
-            <!-- Transformations Bar -->
-            <HBox spacing="10" style="-fx-padding: 10; -fx-border-color: #cccccc; -fx-border-width: 0 0 1 0;">
-                <Label text="Transformations:" style="-fx-font-weight: bold;"/>
-                <Button text="Rotation -90" onAction="#RotateGauche"/>
-                <Button text="Rotation +90" onAction="#RotationDroite"/>
-                <Button text="Miroir horizontal" onAction="#SymmetrieHorizontale"/>
-                <Button text="Miroir vertical" onAction="#SymmetrieVerticale"/>
-            </HBox>
-            
-            <!-- Filters Bar -->
-            <HBox spacing="10" style="-fx-padding: 10; -fx-border-color: #cccccc; -fx-border-width: 0 0 1 0;">
-                <Label text="Color Filters:" style="-fx-font-weight: bold;"/>
-                <Button text="Sépia" onAction="#handleSepiaFilter" prefWidth="80"/>
-                <Button text="Noir &amp; Blanc" onAction="#handleNoirBlancFilter" prefWidth="100"/>
-                <Button text="RGB Swap" onAction="#handleRGBSwapFilter" prefWidth="85"/>
-            </HBox>
-            
-            <!-- Edge Detection Bar -->
-            <HBox spacing="10" style="-fx-padding: 10; -fx-border-color: #cccccc; -fx-border-width: 0 0 1 0;">
-                <Label text="Edge Detection:" style="-fx-font-weight: bold;"/>
-                <Button text="Prewitt" onAction="#handlePrewittFilter" prefWidth="80"/>
+            <HBox spacing="10" style="-fx-padding: 10; -fx-background-color: #f4f4f4;">
+                <Button text="📁 Ouvrir image" onAction="#handleOpenImage"/>
                 <Separator orientation="VERTICAL"/>
-                <Button text="Reset" onAction="#handleReset" style="-fx-padding: 5;" prefWidth="70"/>
-                <Button text="Save" onAction="#handleSaveImage" style="-fx-padding: 5;" prefWidth="70"/>
+                <Label fx:id="labelStatut" text="Prêt" style="-fx-text-fill: #666666;"/>
+            </HBox>
+
+            <HBox spacing="15" style="-fx-padding: 10; -fx-border-color: #cccccc; -fx-border-width: 0 0 1 0;">
+                <Label text="Dimensions:" style="-fx-font-weight: bold;"/>
+                <Button text="↺ -90°" onAction="#RotateGauche"/>
+                <Button text="↻ +90°" onAction="#RotationDroite"/>
+                <Separator orientation="VERTICAL"/>
+                <Button text="↔ Miroir H" onAction="#SymmetrieHorizontale"/>
+                <Button text="↕ Miroir V" onAction="#SymmetrieVerticale"/>
             </HBox>
         </VBox>
     </top>
-    
+
+    <left>
+        <fx:include fx:id="library" source="library.fxml" />
+    </left>
+
     <center>
-        <ScrollPane>
-            <ImageView fx:id="imageView" preserveRatio="true"/>
+        <ScrollPane fitToHeight="true" fitToWidth="true" style="-fx-background: #333333;">
+            <StackPane>
+                <ImageView fx:id="imageView" preserveRatio="true"/>
+            </StackPane>
         </ScrollPane>
     </center>
+
+    <right>
+        <fx:include fx:id="filter" source="filter.fxml" />
+    </right>
 </BorderPane>

@@ -2,6 +2,7 @@ module com.imagemanager {
     requires transitive javafx.graphics;
     requires javafx.controls;
     requires javafx.fxml;
+    requires java.desktop;
 
     opens com.imagemanager to javafx.fxml;
     opens com.imagemanager.controller to javafx.fxml;
