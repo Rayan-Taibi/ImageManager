@@ -5,12 +5,49 @@
 
 <BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.imagemanager.controller.FilterController">
+    
+    <top>
+        <VBox spacing="10" style="-fx-padding: 10;">
+            <Label text="Filters" style="-fx-font-size: 14; -fx-font-weight: bold;"/>
+            <Label fx:id="statusLabel" text="Select an image and choose a filter" />
+        </VBox>
+    </top>
+    
     <center>
-        <Label text="Filter view (TODO)"/>
+        <ScrollPane fitToWidth="true">
+            <VBox spacing="10" style="-fx-padding: 10;">
+                
+                <!-- Color Filters Section -->
+                <Label text="Color Filters" style="-fx-font-size: 12; -fx-font-weight: bold;" />
+                <HBox spacing="10" wrapText="true">
+                    <Button text="Sépia" onAction="#handleSepiaFilter" prefWidth="100" />
+                    <Button text="Noir &amp; Blanc" onAction="#handleNoirBlancFilter" prefWidth="100" />
+                    <Button text="RGB Swap" onAction="#handleRGBSwapFilter" prefWidth="100" />
+                </HBox>
+                
+                <!-- Edge Detection Section -->
+                <Separator />
+                <Label text="Edge Detection" style="-fx-font-size: 12; -fx-font-weight: bold;" />
+                <HBox spacing="10">
+                    <Button text="Prewitt Edge Detection" onAction="#handlePrewittFilter" prefWidth="150" />
+                </HBox>
+                
+                <!-- Legacy Filter -->
+                <Separator />
+                <Label text="Legacy" style="-fx-font-size: 12; -fx-font-weight: bold;" />
+                <HBox spacing="10">
+                    <Button text="Encryption (Legacy)" onAction="#handleEncryptionFilter" prefWidth="150" />
+                </HBox>
+                
+            </VBox>
+        </ScrollPane>
     </center>
-    <HBox spacing="10" alignment="CENTER">
-           <Button text="⟲ -90°" onAction="#handleRotateLeft"/>
-           <Button text="⟳ +90°" onAction="#handleRotateRight"/>
-    </HBox>
-
+    
+    <bottom>
+        <HBox spacing="10" style="-fx-padding: 10;" alignment="CENTER">
+            <Button text="Reset to Original" onAction="#handleReset" style="-fx-font-size: 11;" />
+            <Button text="Save Filtered Image" onAction="#handleSaveImage" style="-fx-font-size: 11;" />
+        </HBox>
+    </bottom>
+    
 </BorderPane>

@@ -14,6 +14,17 @@ public class MainController {
     @FXML
     private Label labelStatut;
 
+    private FilterController filterController;
+    private Image originalImage;
+
+    @FXML
+    public void initialize() {
+        // Initialize the FilterController
+        filterController = new FilterController();
+        filterController.setImageView(imageView);
+        filterController.setStatusLabel(labelStatut);
+    }
+
     @FXML
     protected void handleOpenImage() {
         FileChooser fileChooser = new FileChooser();
@@ -28,6 +39,13 @@ public class MainController {
 
         Image image = new Image(selectedFile.toURI().toString());
         imageView.setImage(image);
+        this.originalImage = image;
+        
+        // Pass the loaded image to FilterController
+        if (filterController != null) {
+            filterController.setOriginalImage(image);
+        }
+        
         labelStatut.setText("Image chargée : " + selectedFile.getName());
     }
 
@@ -53,11 +71,9 @@ public class MainController {
         labelStatut.setText("Rotation de -90 appliquee.");
     }
 
-    // symmetry controllers
     @FXML
     protected void SymmetrieHorizontale() {
         if (imageView.getImage() != null) {
-            // Si c'est déjà à -1, on repasse à 1 (et vice versa)
             double currentScale = imageView.getScaleX();
             imageView.setScaleX(currentScale * -1);
             labelStatut.setText("Effet miroir horizontal appliqué.");
@@ -70,6 +86,58 @@ public class MainController {
             double currentScale = imageView.getScaleY();
             imageView.setScaleY(currentScale * -1);
             labelStatut.setText("Effet miroir vertical appliqué.");
+        }
+    }
+
+    // ===== FILTER DELEGATION METHODS =====
+    // These methods delegate to FilterController
+
+    @FXML
+    protected void handleSepiaFilter() {
+        if (filterController != null) {
+            filterController.handleSepiaFilter();
+        }
+    }
+
+    @FXML
+    protected void handleNoirBlancFilter() {
+        if (filterController != null) {
+            filterController.handleNoirBlancFilter();
+        }
+    }
+
+    @FXML
+    protected void handleRGBSwapFilter() {
+        if (filterController != null) {
+            filterController.handleRGBSwapFilter();
+        }
+    }
+
+    @FXML
+    protected void handlePrewittFilter() {
+        if (filterController != null) {
+            filterController.handlePrewittFilter();
+        }
+    }
+
+    @FXML
+    protected void handleEncryptionFilter() {
+        if (filterController != null) {
+            filterController.handleEncryptionFilter();
+        }
+    }
+
+    @FXML
+    protected void handleReset() {
+        if (filterController != null) {
+            filterController.handleReset();
+        }
+    }
+
+    @FXML
+    protected void handleSaveImage() {
+        if (filterController != null) {
+            filterController.handleSaveImage();
         }
     }
 
