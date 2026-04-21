@@ -1,0 +1,119 @@
+ 
+#root {
+    -fx-background-color: #1e1e2e;
+}
+
+#top-bar {
+    -fx-padding: 12 16 12 16;
+    -fx-background-color: #181825;
+    -fx-spacing: 10;
+    -fx-alignment: CENTER_LEFT;
+    -fx-border-color: #313244;
+    -fx-border-width: 0 0 1 0;
+}
+
+/* App title */
+#titre {
+    -fx-text-fill: #cdd6f4;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-font-family: "Segoe UI", sans-serif;
+}
+
+/* Status label */
+#labelStatut {
+    -fx-text-fill: #6c7086;
+    -fx-font-size: 12px;
+    -fx-font-family: "Segoe UI", sans-serif;
+}
+
+/* ─────────────────────────────────────────
+   Tool Bar  (inner HBox with transform buttons)
+───────────────────────────────────────── */
+#tool-bar {
+    -fx-padding: 8 16 8 16;
+    -fx-spacing: 15;
+    -fx-background-color: #1e1e2e;
+    -fx-border-color: #313244;
+    -fx-border-width: 0 0 1 0;
+    -fx-alignment: CENTER_LEFT;
+}
+
+#tool-bar-label {
+    -fx-font-weight: bold;
+    -fx-text-fill: #a6adc8;
+    -fx-font-size: 12px;
+}
+
+/* ─────────────────────────────────────────
+   Buttons  (shared base)
+───────────────────────────────────────── */
+.button {
+    -fx-background-color: #313244;
+    -fx-text-fill: #cdd6f4;
+    -fx-font-size: 12px;
+    -fx-font-family: "Segoe UI", sans-serif;
+    -fx-background-radius: 6;
+    -fx-padding: 6 14 6 14;
+    -fx-cursor: hand;
+}
+
+.button:hover {
+    -fx-background-color: #45475a;
+}
+
+.button:pressed {
+    -fx-background-color: #585b70;
+}
+
+#btn-reset {
+    -fx-background-color: #f38ba8;
+    -fx-text-fill: #1e1e2e;
+    -fx-font-weight: bold;
+}
+
+#btn-reset:hover {
+    -fx-background-color: #eb6f92;
+}
+
+.separator .line {
+    -fx-border-color: #313244;
+    -fx-border-width: 1;
+}
+
+#canvas-scroll {
+    -fx-background: #11111b;
+    -fx-background-color: #11111b;
+}
+
+#canvas-scroll .viewport {
+    -fx-background-color: #11111b;
+}
+
+#filter-panel {
+    -fx-pref-width: 210;
+    -fx-padding: 16;
+    -fx-spacing: 15;
+    -fx-background-color: #181825;
+    -fx-border-color: #313244;
+    -fx-border-width: 0 0 0 1;
+}
+
+#filter-panel-title {
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #89b4fa;
+    -fx-font-family: "Segoe UI", sans-serif;
+}
+
+/* Section sub-labels inside filter panel */
+#filter-panel .section-label {
+    -fx-font-weight: bold;
+    -fx-text-fill: #a6adc8;
+    -fx-font-size: 11px;
+}
+
+/* Filter buttons inherit .button but get full width */
+#filter-panel .button {
+    -fx-pref-width: 178;
+}

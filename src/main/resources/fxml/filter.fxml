@@ -2,32 +2,48 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox prefWidth="200" spacing="15" style="-fx-padding: 15; -fx-background-color: #eeeeee; -fx-border-color: #cccccc; -fx-border-width: 0 0 0 1;"
+<VBox id="filter-panel"
       xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="com.imagemanager.controller.FilterController">
 
-    <Label text="PANNEAU FILTRES" style="-fx-font-size: 14; -fx-font-weight: bold;"/>
+    <Label text="PANNEAU FILTRES" id="filter-panel-title"/>
 
-    <Separator />
-
-    <VBox spacing="8">
-        <Label text="Couleurs" style="-fx-font-weight: bold; -fx-text-fill: #444444;" />
-        <Button text="Sépia" onAction="#handleSepiaFilter" prefWidth="170" />
-        <Button text="Noir &amp; Blanc" onAction="#handleNoirBlancFilter" prefWidth="170" />
-        <Button text="RGB Swap" onAction="#handleRGBSwapFilter" prefWidth="170" />
-    </VBox>
-
-    <Separator />
+    <Separator/>
 
     <VBox spacing="8">
-        <Label text="Détection &amp; Sécurité" style="-fx-font-weight: bold; -fx-text-fill: #444444;" />
-        <Button text="Contours (Prewitt)" onAction="#handlePrewittFilter" prefWidth="170" />
+        <Label text="Couleurs" styleClass="section-label"/>
+        <Button text="Sépia"        onAction="#handleSepiaFilter"/>
+        <Button text="Noir &amp; Blanc" onAction="#handleNoirBlancFilter"/>
+        <Button text="RGB Swap"     onAction="#handleRGBSwapFilter"/>
+        <Button text="Contours (Prewitt)" onAction="#handlePrewittFilter"/>
+
     </VBox>
 
-    <Region VBox.vgrow="ALWAYS" /> <Separator />
+    <Separator/>
+
+    <VBox spacing="8">
+        <Label text="Transformations" styleClass="section-label"/>
+        <Button text="↺ -90°" onAction="#RotateGauche"/>
+        <Button text="↻ +90°" onAction="#RotationDroite"/>
+        <Button text="↔ Miroir H" onAction="#SymmetrieHorizontale"/>
+        <Button text="↕ Miroir V" onAction="#SymmetrieVerticale"/>
+
+    </VBox>
+
+    <Separator/>
+
+    <VBox spacing="8">
+        <Label text="Détection &amp; Sécurité" styleClass="section-label"/>
+        <Button text="Chiffrer" />
+
+    </VBox>
+
+    <Region VBox.vgrow="ALWAYS"/>
+
+    <Separator/>
 
     <VBox spacing="10">
-        <Button text="Réinitialiser" onAction="#handleReset" prefWidth="170" style="-fx-background-color: #ff9999;" />
+        <Button id="btn-reset" text="Réinitialiser" onAction="#handleReset"/>
     </VBox>
 
 </VBox>

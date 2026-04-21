@@ -51,49 +51,6 @@ public class MainController {
     }
 
     @FXML
-    protected void RotationDroite() {
-        if (imageView.getImage() == null) {
-            labelStatut.setText("Charge d'abord une image.");
-            return;
-        }
-
-        imageView.setRotate(imageView.getRotate() + 90);
-        labelStatut.setText("Rotation de +90 appliquee.");
-    }
-
-    @FXML
-    protected void RotateGauche() {
-        if (imageView.getImage() == null) {
-            labelStatut.setText("Charge d'abord une image.");
-            return;
-        }
-
-        imageView.setRotate(imageView.getRotate() - 90);
-        labelStatut.setText("Rotation de -90 appliquee.");
-    }
-
-    @FXML
-    protected void SymmetrieHorizontale() {
-        if (imageView.getImage() != null) {
-            double currentScale = imageView.getScaleX();
-            imageView.setScaleX(currentScale * -1);
-            labelStatut.setText("Effet miroir horizontal appliqué.");
-        }
-    }
-    
-    @FXML
-    protected void SymmetrieVerticale() {
-        if (imageView.getImage() != null) {
-            double currentScale = imageView.getScaleY();
-            imageView.setScaleY(currentScale * -1);
-            labelStatut.setText("Effet miroir vertical appliqué.");
-        }
-    }
-
-    // ===== FILTER DELEGATION METHODS =====
-    // These methods delegate to FilterController
-
-    @FXML
     protected void handleSepiaFilter() {
         if (filterController != null) {
             filterController.handleSepiaFilter();

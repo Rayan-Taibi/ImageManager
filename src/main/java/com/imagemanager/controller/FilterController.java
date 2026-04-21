@@ -5,7 +5,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.stage.FileChooser;
 
 import com.imagemanager.model.filter.*;
 
@@ -105,6 +104,51 @@ public class FilterController {
         imageView.setImage(originalImage);
         updateStatus("✓ Reset to original image");
     }
+
+    @FXML
+    public void RotationDroite() {
+        if (imageView == null || imageView.getImage() == null) {
+            updateStatus("Error: No image loaded");
+            return;
+        }
+
+        imageView.setRotate(imageView.getRotate() + 90);
+        updateStatus("✓ Rotation +90 applied");
+    }
+
+    @FXML
+    public void RotateGauche() {
+        if (imageView == null || imageView.getImage() == null) {
+            updateStatus("Error: No image loaded");
+            return;
+        }
+
+        imageView.setRotate(imageView.getRotate() - 90);
+        updateStatus("✓ Rotation -90 applied");
+    }
+
+    @FXML
+    public void SymmetrieHorizontale() {
+        if (imageView == null || imageView.getImage() == null) {
+            updateStatus("Error: No image loaded");
+            return;
+        }
+
+        imageView.setScaleX(imageView.getScaleX() * -1);
+        updateStatus("✓ Horizontal mirror applied");
+    }
+
+    @FXML
+    public void SymmetrieVerticale() {
+        if (imageView == null || imageView.getImage() == null) {
+            updateStatus("Error: No image loaded");
+            return;
+        }
+
+        imageView.setScaleY(imageView.getScaleY() * -1);
+        updateStatus("✓ Vertical mirror applied");
+    }
+
     private void updateStatus(String message) {
         if (statusLabel != null) {
             statusLabel.setText(message);

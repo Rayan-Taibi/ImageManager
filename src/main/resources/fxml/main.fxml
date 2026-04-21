@@ -4,32 +4,27 @@
 <?import javafx.scene.layout.*?>
 
 <BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.imagemanager.controller.MainController">
+            fx:controller="com.imagemanager.controller.MainController"
+            stylesheets="@../css/style.css" id="root">
+
     <top>
         <VBox spacing="0">
-            <HBox spacing="10" style="-fx-padding: 10; -fx-background-color: #f4f4f4;">
+            <HBox id="top-bar">
+                <Label text="Gestionnaire d'image" id="titre"/>
+                <Region HBox.hgrow="ALWAYS"/>
                 <Button text="📁 Ouvrir image" onAction="#handleOpenImage"/>
                 <Separator orientation="VERTICAL"/>
-                <Label fx:id="labelStatut" text="Prêt" style="-fx-text-fill: #666666;"/>
-            </HBox>
-
-            <HBox spacing="15" style="-fx-padding: 10; -fx-border-color: #cccccc; -fx-border-width: 0 0 1 0;">
-                <Label text="Dimensions:" style="-fx-font-weight: bold;"/>
-                <Button text="↺ -90°" onAction="#RotateGauche"/>
-                <Button text="↻ +90°" onAction="#RotationDroite"/>
-                <Separator orientation="VERTICAL"/>
-                <Button text="↔ Miroir H" onAction="#SymmetrieHorizontale"/>
-                <Button text="↕ Miroir V" onAction="#SymmetrieVerticale"/>
+                <Label fx:id="labelStatut" text="Prêt"/>
             </HBox>
         </VBox>
     </top>
 
     <left>
-        <fx:include fx:id="library" source="library.fxml" />
+        <fx:include fx:id="library" source="library.fxml"/>
     </left>
 
     <center>
-        <ScrollPane fitToHeight="true" fitToWidth="true" style="-fx-background: #333333;">
+        <ScrollPane id="canvas-scroll" fitToHeight="true" fitToWidth="true">
             <StackPane>
                 <ImageView fx:id="imageView" preserveRatio="true"/>
             </StackPane>
@@ -37,6 +32,7 @@
     </center>
 
     <right>
-        <fx:include fx:id="filter" source="filter.fxml" />
+        <fx:include fx:id="filter" source="filter.fxml"/>
     </right>
+
 </BorderPane>
