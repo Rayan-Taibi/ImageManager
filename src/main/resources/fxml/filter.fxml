@@ -10,32 +10,31 @@
 
     <Separator/>
 
-    <VBox spacing="8">
+    <VBox spacing="4">
         <Label text="Couleurs" styleClass="section-label"/>
         <Button text="Sépia"        onAction="#handleSepiaFilter"/>
         <Button text="Noir &amp; Blanc" onAction="#handleNoirBlancFilter"/>
         <Button text="RGB Swap"     onAction="#handleRGBSwapFilter"/>
         <Button text="Contours (Prewitt)" onAction="#handlePrewittFilter"/>
-
     </VBox>
 
     <Separator/>
 
-    <VBox spacing="8">
+    <VBox spacing="4">
         <Label text="Transformations" styleClass="section-label"/>
         <Button text="↺ -90°" onAction="#RotateGauche"/>
         <Button text="↻ +90°" onAction="#RotationDroite"/>
         <Button text="↔ Miroir H" onAction="#SymmetrieHorizontale"/>
         <Button text="↕ Miroir V" onAction="#SymmetrieVerticale"/>
-
     </VBox>
 
     <Separator/>
 
-    <VBox spacing="8">
+    <VBox spacing="4">
         <Label text="Détection &amp; Sécurité" styleClass="section-label"/>
         <Button text="Chiffrer" />
-
+        <Button text="Déchiffrer" />
+        <TextField promptText="Clé de chiffrement"/>
     </VBox>
 
     <Region VBox.vgrow="ALWAYS"/>
