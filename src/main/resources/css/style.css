@@ -47,31 +47,34 @@
 
 
 .button {
-    -fx-background-color: #313244;
-    -fx-text-fill: #cdd6f4;
+    -fx-background-color: #4C72E8;
+    -fx-text-fill: #ffffff;
     -fx-font-size: 12px;
     -fx-font-family: "Segoe UI", sans-serif;
     -fx-background-radius: 6;
-    -fx-padding: 6 14 6 14;
+    -fx-padding: 8 16 8 16;
     -fx-cursor: hand;
+    -fx-font-weight: 500;
 }
 
 .button:hover {
-    -fx-background-color: #45475a;
+    -fx-background-color: #5580FF;
+    -fx-scale-x: 1.02;
+    -fx-scale-y: 1.02;
 }
 
 .button:pressed {
-    -fx-background-color: #585b70;
+    -fx-background-color: #3A54B3;
 }
 
 #btn-reset {
-    -fx-background-color: #fd0048;
-    -fx-text-fill: #1e1e2e;
+    -fx-background-color: #FF6B6B;
+    -fx-text-fill: #ffffff;
     -fx-font-weight: bold;
 }
 
 #btn-reset:hover {
-    -fx-background-color: #eb6f92;
+    -fx-background-color: #FF8787;
 }
 
 .separator .line {
@@ -121,4 +124,34 @@
     -fx-text-fill: #151821;
     -fx-font-size: 12px;
     -fx-max-width: 175;
+}
+
+/* Status labels for messages */
+.status-success {
+    -fx-text-fill: #51CF66;
+    -fx-font-weight: bold;
+}
+
+.status-error {
+    -fx-text-fill: #FF6B6B;
+    -fx-font-weight: bold;
+}
+
+.status-info {
+    -fx-text-fill: #4C72E8;
+    -fx-font-weight: bold;
+}
+
+/* Improved label styling */
+.label {
+    -fx-font-family: "Segoe UI", sans-serif;
+}
+
+/* Tab and accordion styling */
+.tab {
+    -fx-background-color: #1e1e2e;
+}
+
+.tab:selected {
+    -fx-background-color: #4C72E8;
 }
