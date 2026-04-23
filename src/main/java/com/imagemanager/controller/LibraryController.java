@@ -37,9 +37,33 @@ public class LibraryController {
     private String currentSelectedPath;
     private List<String> allImagePaths;
 
+    private final ObservableList<String> displayedPaths = FXCollections.observableArrayList();
+
     @FXML
     public void initialize() {
         metadataManager = new MetadataManager(new JsonMetadataDAO());
+
+        // Show only filename in list, but keep real absolute path as the item value
+        imageListView.setItems(displayedPaths);
+        imageListView.setCellFactory(lv -> new ListCell<>() {
+            @Override
+            protected void updateItem(String path, boolean empty) {
+                super.updateItem(path, empty);
+                if (empty || path == null) {
+                    setText(null);
+                } else {
+                    setText(new File(path).getName());
+                }
+            }
+        });
+
+        imageListView.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
+            currentSelectedPath = newVal;
+            if (currentSelectedPath != null) {
+                displayPreview(currentSelectedPath);
+            }
+        });
+
         loadImages();
     }
 
@@ -54,7 +78,7 @@ public class LibraryController {
      * Load all images from metadata file.
      */
     private void loadImages() {
-        allImagePaths = metadataManager.getAllMetadata().keySet().stream().toList();
+        allImagePaths = metadataManager.getAllMetadata().keySet().stream().sorted().toList();
         displayImages(allImagePaths);
     }
 
@@ -62,23 +86,8 @@ public class LibraryController {
      * Display a list of image paths in the ListView.
      */
     private void displayImages(List<String> paths) {
-        ObservableList<String> items = FXCollections.observableArrayList();
-        
-        for (String path : paths) {
-            File file = new File(path);
-            items.add(file.getName() + " (" + path + ")");
-        }
-
-        imageListView.setItems(items);
+        displayedPaths.setAll(paths);
         resultCountLabel.setText("Found: " + paths.size());
-
-        // Set selection listener
-        imageListView.getSelectionModel().selectedIndexProperty().addListener((obs, oldVal, newVal) -> {
-            if (newVal != null && newVal.intValue() >= 0 && newVal.intValue() < paths.size()) {
-                currentSelectedPath = paths.get(newVal.intValue());
-                displayPreview(currentSelectedPath);
-            }
-        });
     }
 
     /**
@@ -96,9 +105,10 @@ public class LibraryController {
                 StringBuilder info = new StringBuilder("File: " + file.getName() + "\n");
                 info.append("Path: ").append(imagePath).append("\n");
                 info.append("Tags: ");
-                
-                if (meta != null && !meta.getTags().isEmpty()) {
-                    meta.getTags().forEach(tag -> info.append(tag.value()).append(", "));
+
+                if (meta != null && meta.getTags() != null && !meta.getTags().isEmpty()) {
+                    String tags = String.join(", ", meta.getTags().stream().map(t -> t.value()).toList());
+                    info.append(tags);
                 } else {
                     info.append("(none)");
                 }
@@ -162,11 +172,9 @@ public class LibraryController {
                 return;
             }
 
-            Image img = new Image(file.toURI().toString());
-            
             if (filterController != null) {
-                filterController.setOriginalImage(img);
-                filterController.setCurrentImage(currentSelectedPath);
+                // This will load the image AND replay saved filters/transforms in order
+                filterController.loadImageFromPath(currentSelectedPath);
             }
 
             showInfo("Loaded: " + file.getName());
@@ -180,6 +188,8 @@ public class LibraryController {
      */
     @FXML
     public void handleRefresh() {
+        // Reload from disk so the library reflects latest saved metadata
+        metadataManager = new MetadataManager(new JsonMetadataDAO());
         loadImages();
         showInfo("Library refreshed");
     }

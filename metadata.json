@@ -44,6 +44,31 @@
       "parameter" : null
     } ]
   },
+  "C:\\Users\\rmdzv\\OneDrive\\Images\\Captures d’écran\\Capture d'écran 2025-10-11 105546.png" : {
+    "imagePath" : "C:\\Users\\rmdzv\\OneDrive\\Images\\Captures d’écran\\Capture d'écran 2025-10-11 105546.png",
+    "tags" : [ {
+      "value" : "papa"
+    }, {
+      "value" : "mama"
+    } ],
+    "transformations" : [ {
+      "name" : "Prewitt",
+      "type" : "filter",
+      "parameter" : null
+    }, {
+      "name" : "RotationDroite",
+      "type" : "transform",
+      "parameter" : null
+    }, {
+      "name" : "Encryption",
+      "type" : "security",
+      "parameter" : null
+    }, {
+      "name" : "Decryption",
+      "type" : "security",
+      "parameter" : null
+    } ]
+  },
   "C:\\Users\\rmdzv\\OneDrive\\Images\\alien.jpg" : {
     "imagePath" : "C:\\Users\\rmdzv\\OneDrive\\Images\\alien.jpg",
     "tags" : [ {

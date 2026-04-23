@@ -16,13 +16,18 @@ public class MainController {
 
     @FXML
     private FilterController filterController;
-    private Image originalImage;
+
+    @FXML
+    private LibraryController libraryController;
 
     @FXML
     public void initialize() {
         if (filterController != null) {
             filterController.setImageView(imageView);
-            filterController.setStatusLabel(labelStatut);
+            filterController.setMainStatusLabel(labelStatut);
+        }
+        if (libraryController != null && filterController != null) {
+            libraryController.setFilterController(filterController);
         }
     }
 
@@ -38,19 +43,10 @@ public class MainController {
             return;
         }
 
-        Image image = new Image(selectedFile.toURI().toString());
-        imageView.setImage(image);
-        this.originalImage = image;
-        
-        // Pass the loaded image AND the file path to FilterController
         if (filterController != null) {
-            filterController.setOriginalImage(image);
-            filterController.setImagePath(selectedFile.getAbsolutePath());
-            // Load transformations from metadata and apply them
-            filterController.loadAndApplyTransformations(selectedFile.getAbsolutePath());
-            filterController.loadTags();
+            filterController.loadImageFromPath(selectedFile.getAbsolutePath());
         }
-        
+
         labelStatut.setText("Image chargée : " + selectedFile.getName());
     }
 

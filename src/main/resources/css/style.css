@@ -67,6 +67,48 @@
     -fx-background-color: #3A54B3;
 }
 
+/* Secondary buttons (neutral) */
+.button.secondary {
+    -fx-background-color: #313244;
+    -fx-text-fill: #cdd6f4;
+}
+
+.button.secondary:hover {
+    -fx-background-color: #45475a;
+}
+
+/* Library panel */
+#library-panel {
+    -fx-pref-width: 280;
+    -fx-background-color: #181825;
+    -fx-border-color: #313244;
+    -fx-border-width: 0 1 0 0;
+}
+
+#library-panel .list-view {
+    -fx-background-color: #11111b;
+    -fx-border-color: #313244;
+}
+
+#library-panel .list-cell {
+    -fx-text-fill: #cdd6f4;
+    -fx-background-color: #11111b;
+}
+
+#library-panel .list-cell:filled:selected {
+    -fx-background-color: #4C72E8;
+    -fx-text-fill: white;
+}
+
+#library-panel .text-field {
+    -fx-background-color: #11111b;
+    -fx-text-fill: #cdd6f4;
+    -fx-prompt-text-fill: #6c7086;
+    -fx-border-color: #313244;
+    -fx-background-radius: 6;
+    -fx-border-radius: 6;
+}
+
 #btn-reset {
     -fx-background-color: #FF6B6B;
     -fx-text-fill: #ffffff;

@@ -55,7 +55,7 @@
     <VBox spacing="10">
         <Button text="💾 Sauvegarder Métadonnées" onAction="#handleSaveMetadata" style="-fx-padding: 8;"/>
         <Button id="btn-reset" text="Réinitialiser" onAction="#handleReset"/>
-        <Label fx:id="statusLabel" text="Ready" wrapText="true" style="-fx-font-size: 10;"/>
+        <Label fx:id="panelStatusLabel" text="Ready" wrapText="true" style="-fx-font-size: 10;" styleClass="status-info"/>
     </VBox>
 
 </VBox>

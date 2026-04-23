@@ -11,11 +11,11 @@
     <top>
         <VBox spacing="8" style="-fx-padding: 10;">
             <Label text="📚 Bibliothèque" style="-fx-font-size: 14; -fx-font-weight: bold;"/>
-            <HBox spacing="5">
+            <HBox spacing="6">
                 <TextField fx:id="searchField" promptText="Search by tag..." HBox.hgrow="ALWAYS"/>
                 <Button text="🔍 Chercher" onAction="#handleSearch"/>
+                <Button text="✖ Clear" onAction="#handleClearSearch" styleClass="secondary"/>
             </HBox>
-            <Button text="Clear" onAction="#handleClearSearch"/>
             <Label fx:id="resultCountLabel" text="Found: 0"/>
         </VBox>
     </top>
@@ -26,8 +26,8 @@
             <VBox spacing="10" style="-fx-padding: 10;">
                 <ImageView fx:id="previewImageView" fitWidth="200" fitHeight="200" preserveRatio="true"/>
                 <Label fx:id="infoLabel" wrapText="true" style="-fx-font-size: 10;"/>
-                <Button text="Load for Editing" onAction="#handleLoadForEditing"/>
-                <Button text="Refresh" onAction="#handleRefresh"/>
+                <Button text="✅ Charger" onAction="#handleLoadForEditing"/>
+                <Button text="⟳ Rafraîchir" onAction="#handleRefresh" styleClass="secondary"/>
             </VBox>
         </SplitPane>
     </center>

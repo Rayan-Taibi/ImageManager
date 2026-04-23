@@ -9,14 +9,12 @@ import java.util.Map;
  * Defines contract for saving and loading image metadata.
  */
 public interface MetadataDAO {
-    /**
-     * Save all metadata to storage.
-     */
+    //Save all metadata to storage.
+     
     void saveMetadata(Map<String, ImageMetadata> allMetadata) throws IOException;
 
-    /**
-     * Load all metadata from storage.
-     */
+    // Load all metadata from storage.
+     
     Map<String, ImageMetadata> loadMetadata() throws IOException;
 
     /**
