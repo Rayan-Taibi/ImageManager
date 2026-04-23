@@ -33,9 +33,29 @@
     <Separator/>
 
     <VBox spacing="8">
-        <Label text="Détection &amp; Sécurité" styleClass="section-label"/>
-        <Button text="Chiffrer" />
+        <Label text="Tags" styleClass="section-label"/>
+        <HBox spacing="5">
+            <TextField fx:id="tagInputField" promptText="Enter tag..." HBox.hgrow="ALWAYS"/>
+            <Button text="+" onAction="#handleAddTag" prefWidth="40"/>
+        </HBox>
+        <Label fx:id="tagsLabel" text="Tags: (none)" wrapText="true"/>
+    </VBox>
 
+    <Separator/>
+
+    <VBox spacing="8">
+        <Label text="Chiffrement" styleClass="section-label"/>
+        <TextField fx:id="passwordField" promptText="Password..."/>
+        <HBox spacing="5">
+            <Button text="Chiffrer" onAction="#handleEncrypt" HBox.hgrow="ALWAYS"/>
+            <Button text="Déchiffrer" onAction="#handleDecrypt" HBox.hgrow="ALWAYS"/>
+        </HBox>
+    </VBox>
+
+    <Separator/>
+
+    <VBox spacing="8">
+        <Button text="💾 Sauvegarder Métadonnées" onAction="#handleSaveMetadata" maxWidth="Infinity"/>
     </VBox>
 
     <Region VBox.vgrow="ALWAYS"/>
@@ -44,6 +64,8 @@
 
     <VBox spacing="10">
         <Button id="btn-reset" text="Réinitialiser" onAction="#handleReset"/>
+        <Label fx:id="statusLabel" text="Ready" wrapText="true" style="-fx-font-size: 10;"/>
     </VBox>
 
 </VBox>
+

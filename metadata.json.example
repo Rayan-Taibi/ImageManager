@@ -1,0 +1,38 @@
+{
+  "C:/Users/rmdzv/OneDrive/Bureau/photo1.jpg" : {
+    "imagePath" : "C:/Users/rmdzv/OneDrive/Bureau/photo1.jpg",
+    "tags" : [ {
+      "value" : "vacation"
+    }, {
+      "value" : "beach"
+    }, {
+      "value" : "summer2025"
+    } ],
+    "transformations" : [ {
+      "name" : "RGBSwap",
+      "type" : "filter",
+      "parameter" : null
+    }, {
+      "name" : "RotationDroite",
+      "type" : "transform",
+      "parameter" : null
+    }, {
+      "name" : "Encryption",
+      "type" : "filter",
+      "parameter" : null
+    } ]
+  },
+  "C:/Users/rmdzv/OneDrive/Bureau/photo2.jpg" : {
+    "imagePath" : "C:/Users/rmdzv/OneDrive/Bureau/photo2.jpg",
+    "tags" : [ {
+      "value" : "family"
+    }, {
+      "value" : "important"
+    } ],
+    "transformations" : [ {
+      "name" : "Sepia",
+      "type" : "filter",
+      "parameter" : null
+    } ]
+  }
+}

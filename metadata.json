@@ -1,0 +1,89 @@
+{
+  "loaded_image_1776950731589" : {
+    "imagePath" : "loaded_image_1776950731589",
+    "tags" : [ {
+      "value" : "izan"
+    } ],
+    "transformations" : [ {
+      "name" : "NoireBlanc",
+      "type" : "filter",
+      "parameter" : null
+    }, {
+      "name" : "Sepia",
+      "type" : "filter",
+      "parameter" : null
+    }, {
+      "name" : "Prewitt",
+      "type" : "filter",
+      "parameter" : null
+    }, {
+      "name" : "RGBSwap",
+      "type" : "filter",
+      "parameter" : null
+    }, {
+      "name" : "RGBSwap",
+      "type" : "filter",
+      "parameter" : null
+    }, {
+      "name" : "RGBSwap",
+      "type" : "filter",
+      "parameter" : null
+    }, {
+      "name" : "RotateGauche",
+      "type" : "transform",
+      "parameter" : null
+    }, {
+      "name" : "RotateGauche",
+      "type" : "transform",
+      "parameter" : null
+    }, {
+      "name" : "RotateGauche",
+      "type" : "transform",
+      "parameter" : null
+    }, {
+      "name" : "RotateGauche",
+      "type" : "transform",
+      "parameter" : null
+    }, {
+      "name" : "RotationDroite",
+      "type" : "transform",
+      "parameter" : null
+    }, {
+      "name" : "RotationDroite",
+      "type" : "transform",
+      "parameter" : null
+    }, {
+      "name" : "RotationDroite",
+      "type" : "transform",
+      "parameter" : null
+    }, {
+      "name" : "RotationDroite",
+      "type" : "transform",
+      "parameter" : null
+    }, {
+      "name" : "SymmetrieHorizontale",
+      "type" : "transform",
+      "parameter" : null
+    }, {
+      "name" : "SymmetrieHorizontale",
+      "type" : "transform",
+      "parameter" : null
+    }, {
+      "name" : "SymmetrieVerticale",
+      "type" : "transform",
+      "parameter" : null
+    }, {
+      "name" : "SymmetrieVerticale",
+      "type" : "transform",
+      "parameter" : null
+    }, {
+      "name" : "Encryption",
+      "type" : "filter",
+      "parameter" : null
+    }, {
+      "name" : "RotationDroite",
+      "type" : "transform",
+      "parameter" : null
+    } ]
+  }
+}

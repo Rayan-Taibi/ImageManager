@@ -1,11 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
 <BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.imagemanager.controller.LibraryController">
+            fx:controller="com.imagemanager.controller.LibraryController"
+            id="library-panel">
+
+    <top>
+        <VBox spacing="8" style="-fx-padding: 10;">
+            <Label text="📚 Bibliothèque" style="-fx-font-size: 14; -fx-font-weight: bold;"/>
+            <HBox spacing="5">
+                <TextField fx:id="searchField" promptText="Search by tag..." HBox.hgrow="ALWAYS"/>
+                <Button text="🔍 Chercher" onAction="#handleSearch"/>
+            </HBox>
+            <Button text="Clear" onAction="#handleClearSearch"/>
+            <Label fx:id="resultCountLabel" text="Found: 0"/>
+        </VBox>
+    </top>
+
     <center>
-        <Label text="Library view (TODO)"/>
+        <SplitPane dividerPositions="0.6" VBox.vgrow="ALWAYS">
+            <ListView fx:id="imageListView" prefWidth="150" VBox.vgrow="ALWAYS"/>
+            <VBox spacing="10" style="-fx-padding: 10;">
+                <ImageView fx:id="previewImageView" fitWidth="200" fitHeight="200" preserveRatio="true"/>
+                <Label fx:id="infoLabel" wrapText="true" style="-fx-font-size: 10;"/>
+                <Button text="Load for Editing" onAction="#handleLoadForEditing"/>
+                <Button text="Refresh" onAction="#handleRefresh"/>
+            </VBox>
+        </SplitPane>
     </center>
+
 </BorderPane>
