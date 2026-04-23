@@ -9,14 +9,23 @@
             id="library-panel">
 
     <top>
-        <VBox spacing="8" style="-fx-padding: 10;">
-            <Label text="📚 Bibliothèque" style="-fx-font-size: 14; -fx-font-weight: bold;"/>
-            <HBox spacing="6">
-                <TextField fx:id="searchField" promptText="Search by tag..." HBox.hgrow="ALWAYS"/>
-                <Button text="🔍 Chercher" onAction="#handleSearch"/>
-                <Button text="✖ Clear" onAction="#handleClearSearch" styleClass="secondary"/>
+        <VBox spacing="10" style="-fx-padding: 14 12 10 12;">
+
+            <Label text="📚  Bibliothèque"
+                   style="-fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: #89b4fa;"/>
+
+            <HBox spacing="6" alignment="CENTER_LEFT">
+                <TextField fx:id="searchField" promptText="Rechercher par tag…"
+                           HBox.hgrow="ALWAYS"/>
+                <Button text="🔍" onAction="#handleSearch"
+                        style="-fx-min-width: 34; -fx-padding: 6 8 6 8;"/>
+                <Button text="✕" onAction="#handleClearSearch"
+                        styleClass="secondary"
+                        style="-fx-min-width: 30; -fx-padding: 6 8 6 8;"/>
             </HBox>
-            <Label fx:id="resultCountLabel" text="Found: 0"/>
+
+            <Label fx:id="resultCountLabel" text="0 résultat(s)"/>
+
         </VBox>
     </top>
 

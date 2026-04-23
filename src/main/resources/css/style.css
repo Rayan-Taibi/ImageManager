@@ -1,199 +1,368 @@
- 
+/* ═══════════════════════════════════════════════════════════
+   IMAGE MANAGER  —  Enhanced UI  (Catppuccin Mocha + Glow)
+   All fx:id and onAction names are unchanged.
+═══════════════════════════════════════════════════════════ */
+
+/* ── Root ─────────────────────────────────────────────── */
 #root {
-    -fx-background-color: #1e1e2e;
+    -fx-background-color: #13131f;
+    -fx-font-family: "Segoe UI", "SF Pro Display", sans-serif;
 }
 
+/* ── Top Bar ──────────────────────────────────────────── */
 #top-bar {
-    -fx-padding: 12 16 12 16;
-    -fx-background-color: #181825;
-    -fx-spacing: 10;
+    -fx-padding: 14 20 14 20;
+    -fx-background-color: linear-gradient(to right, #12121c, #181828);
+    -fx-spacing: 12;
     -fx-alignment: CENTER_LEFT;
-    -fx-border-color: #313244;
+    -fx-border-color: #2a2a40;
     -fx-border-width: 0 0 1 0;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 8, 0, 0, 3);
 }
 
-/* App title */
 #titre {
     -fx-text-fill: #cdd6f4;
-    -fx-font-size: 18px;
+    -fx-font-size: 17px;
     -fx-font-weight: bold;
-    -fx-font-family: "Segoe UI", sans-serif;
+    -fx-font-family: "Segoe UI Semibold", "SF Pro Display", sans-serif;
+    -fx-effect: dropshadow(gaussian, rgba(100,130,255,0.35), 10, 0, 0, 0);
 }
 
-/* Status label */
 #labelStatut {
-    -fx-text-fill: #6c7086;
-    -fx-font-size: 12px;
-    -fx-font-family: "Segoe UI", sans-serif;
+    -fx-text-fill: #585b7c;
+    -fx-font-size: 11.5px;
+    -fx-padding: 3 10 3 10;
+    -fx-background-color: #1e1e30;
+    -fx-background-radius: 20;
+    -fx-border-color: #2e2e48;
+    -fx-border-radius: 20;
+    -fx-border-width: 1;
 }
 
-/* ─────────────────────────────────────────
-   Tool Bar  (inner HBox with transform buttons)
-───────────────────────────────────────── */
+/* ── Tool Bar ─────────────────────────────────────────── */
 #tool-bar {
-    -fx-padding: 8 16 8 16;
-    -fx-spacing: 15;
-    -fx-background-color: #1e1e2e;
-    -fx-border-color: #313244;
+    -fx-padding: 8 20 8 20;
+    -fx-spacing: 12;
+    -fx-background-color: #13131f;
+    -fx-border-color: #222235;
     -fx-border-width: 0 0 1 0;
     -fx-alignment: CENTER_LEFT;
 }
 
 #tool-bar-label {
     -fx-font-weight: bold;
-    -fx-text-fill: #a6adc8;
-    -fx-font-size: 12px;
+    -fx-text-fill: #7f849c;
+    -fx-font-size: 11px;
+    -fx-letter-spacing: 0.08em;
 }
 
-
+/* ── Global Buttons ───────────────────────────────────── */
 .button {
-    -fx-background-color: #4C72E8;
+    -fx-background-color: linear-gradient(to bottom, #5b7cf7, #4465e8);
     -fx-text-fill: #ffffff;
     -fx-font-size: 12px;
     -fx-font-family: "Segoe UI", sans-serif;
-    -fx-background-radius: 6;
-    -fx-padding: 8 16 8 16;
+    -fx-font-weight: 600;
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
+    -fx-padding: 7 15 7 15;
     -fx-cursor: hand;
-    -fx-font-weight: 500;
+    -fx-effect: dropshadow(gaussian, rgba(70,100,235,0.40), 8, 0, 0, 2);
 }
 
 .button:hover {
-    -fx-background-color: #5580FF;
-    -fx-scale-x: 1.02;
-    -fx-scale-y: 1.02;
+    -fx-background-color: linear-gradient(to bottom, #6b8bff, #5575f8);
+    -fx-effect: dropshadow(gaussian, rgba(90,120,255,0.65), 12, 0, 0, 3);
+    -fx-scale-x: 1.025;
+    -fx-scale-y: 1.025;
 }
 
 .button:pressed {
-    -fx-background-color: #3A54B3;
+    -fx-background-color: linear-gradient(to bottom, #3a54c8, #2f46b0);
+    -fx-scale-x: 0.975;
+    -fx-scale-y: 0.975;
+    -fx-effect: dropshadow(gaussian, rgba(50,80,200,0.30), 4, 0, 0, 1);
 }
 
-/* Secondary buttons (neutral) */
+.button:focused {
+    -fx-border-color: rgba(100,140,255,0.7);
+    -fx-border-width: 1.5;
+    -fx-border-radius: 8;
+}
+
+/* Secondary / neutral buttons */
 .button.secondary {
-    -fx-background-color: #313244;
-    -fx-text-fill: #cdd6f4;
+    -fx-background-color: linear-gradient(to bottom, #2e2e44, #252540);
+    -fx-text-fill: #b0b5d0;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 4, 0, 0, 1);
 }
 
 .button.secondary:hover {
-    -fx-background-color: #45475a;
+    -fx-background-color: linear-gradient(to bottom, #3a3a56, #30304c);
+    -fx-text-fill: #cdd6f4;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 6, 0, 0, 2);
 }
 
-/* Library panel */
+/* ── Library Panel ────────────────────────────────────── */
 #library-panel {
-    -fx-pref-width: 280;
-    -fx-background-color: #181825;
-    -fx-border-color: #313244;
+    -fx-pref-width: 265;
+    -fx-background-color: #14141f;
+    -fx-border-color: #242438;
     -fx-border-width: 0 1 0 0;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 10, 0, 3, 0);
+}
+
+/* Header area inside library */
+#library-panel .label {
+    -fx-text-fill: #cdd6f4;
 }
 
 #library-panel .list-view {
-    -fx-background-color: #11111b;
-    -fx-border-color: #313244;
+    -fx-background-color: #0f0f1a;
+    -fx-border-color: #20203a;
+    -fx-border-width: 1 0 0 0;
+    -fx-padding: 4 0 4 0;
 }
 
 #library-panel .list-cell {
+    -fx-text-fill: #a6adca;
+    -fx-background-color: transparent;
+    -fx-padding: 7 12 7 12;
+    -fx-font-size: 12.5px;
+    -fx-border-color: transparent;
+    -fx-border-width: 0 0 1 0;
+}
+
+#library-panel .list-cell:odd {
+    -fx-background-color: rgba(255,255,255,0.015);
+}
+
+#library-panel .list-cell:filled:hover {
+    -fx-background-color: rgba(75,115,240,0.12);
     -fx-text-fill: #cdd6f4;
-    -fx-background-color: #11111b;
 }
 
 #library-panel .list-cell:filled:selected {
-    -fx-background-color: #4C72E8;
-    -fx-text-fill: white;
+    -fx-background-color: linear-gradient(to right, rgba(75,115,240,0.35), rgba(75,115,240,0.15));
+    -fx-text-fill: #ffffff;
+    -fx-border-color: rgba(75,115,240,0.5);
+    -fx-border-width: 0 0 0 3;
 }
 
 #library-panel .text-field {
-    -fx-background-color: #11111b;
+    -fx-background-color: #0e0e1a;
     -fx-text-fill: #cdd6f4;
-    -fx-prompt-text-fill: #6c7086;
-    -fx-border-color: #313244;
-    -fx-background-radius: 6;
-    -fx-border-radius: 6;
-}
-
-#btn-reset {
-    -fx-background-color: #FF6B6B;
-    -fx-text-fill: #ffffff;
-    -fx-font-weight: bold;
-}
-
-#btn-reset:hover {
-    -fx-background-color: #FF8787;
-}
-
-.separator .line {
-    -fx-border-color: #313244;
+    -fx-prompt-text-fill: #44475a;
+    -fx-border-color: #28284a;
     -fx-border-width: 1;
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
+    -fx-padding: 6 10 6 10;
+    -fx-font-size: 12px;
 }
 
+#library-panel .text-field:focused {
+    -fx-border-color: rgba(75,115,240,0.7);
+    -fx-effect: dropshadow(gaussian, rgba(75,115,240,0.25), 8, 0, 0, 0);
+}
+
+/* ── Canvas / Scroll Pane ─────────────────────────────── */
 #canvas-scroll {
-    -fx-background: #11111b;
-    -fx-background-color: #11111b;
+    -fx-background: #0c0c17;
+    -fx-background-color: #0c0c17;
+    -fx-padding: 0;
 }
 
 #canvas-scroll .viewport {
-    -fx-background-color: #11111b;
+    -fx-background-color: #0c0c17;
 }
 
+#canvas-scroll .scroll-bar:vertical,
+#canvas-scroll .scroll-bar:horizontal {
+    -fx-background-color: #14141f;
+    -fx-pref-width: 8;
+    -fx-pref-height: 8;
+}
+
+#canvas-scroll .scroll-bar .thumb {
+    -fx-background-color: #2e2e50;
+    -fx-background-radius: 4;
+}
+
+#canvas-scroll .scroll-bar .thumb:hover {
+    -fx-background-color: #4a4a70;
+}
+
+/* ImageView gets a subtle glow when it's the canvas center */
+.canvas-stack {
+    -fx-padding: 20;
+    -fx-background-color: #0c0c17;
+}
+
+/* ── Filter Panel ─────────────────────────────────────── */
 #filter-panel {
-    -fx-pref-width: 210;
-    -fx-padding: 8;
-    -fx-spacing: 8;
-    -fx-background-color: #181825;
-    -fx-border-color: #313244;
+    -fx-pref-width: 205;
+    -fx-min-width: 190;
+    -fx-padding: 14 10 14 10;
+    -fx-spacing: 10;
+    -fx-background-color: #14141f;
+    -fx-border-color: #242438;
     -fx-border-width: 0 0 0 1;
 }
 
 #filter-panel-title {
-    -fx-font-size: 13px;
+    -fx-font-size: 10.5px;
     -fx-font-weight: bold;
-    -fx-text-fill: #89b4fa;
+    -fx-text-fill: #5a70c8;
     -fx-font-family: "Segoe UI", sans-serif;
+    -fx-letter-spacing: 0.12em;
+    -fx-padding: 0 0 2 2;
 }
 
-/* Section sub-labels inside filter panel */
+/* Section labels inside filter panel */
 #filter-panel .section-label {
     -fx-font-weight: bold;
-    -fx-text-fill: #a6adc8;
+    -fx-text-fill: #585c7a;
+    -fx-font-size: 10.5px;
+    -fx-letter-spacing: 0.06em;
+    -fx-padding: 4 0 2 2;
+}
+
+/* Filter buttons — full width, slightly smaller */
+#filter-panel .button {
+    -fx-pref-width: 182;
+    -fx-padding: 6 10 6 10;
+    -fx-font-size: 11.5px;
+    -fx-background-radius: 7;
+    -fx-border-radius: 7;
+}
+
+/* Text fields inside filter panel */
+#filter-panel .text-field {
+    -fx-background-color: #0e0e1a;
+    -fx-text-fill: #cdd6f4;
+    -fx-prompt-text-fill: #44475a;
+    -fx-border-color: #28284a;
+    -fx-border-width: 1;
+    -fx-background-radius: 7;
+    -fx-border-radius: 7;
+    -fx-padding: 6 10 6 10;
+    -fx-font-size: 11.5px;
+    -fx-max-width: 182;
+}
+
+#filter-panel .text-field:focused {
+    -fx-border-color: rgba(75,115,240,0.6);
+    -fx-effect: dropshadow(gaussian, rgba(75,115,240,0.2), 6, 0, 0, 0);
+}
+
+/* Tags label */
+#filter-panel #tagsLabel {
+    -fx-text-fill: #585c7a;
+    -fx-font-size: 10.5px;
+    -fx-padding: 2 4 2 4;
+    -fx-background-color: rgba(255,255,255,0.03);
+    -fx-background-radius: 5;
+    -fx-border-color: #202035;
+    -fx-border-width: 1;
+    -fx-border-radius: 5;
+}
+
+/* ── Specific Buttons ─────────────────────────────────── */
+#btn-reset {
+    -fx-background-color: linear-gradient(to bottom, #e06060, #c94848);
+    -fx-text-fill: #ffffff;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(gaussian, rgba(200,70,70,0.40), 8, 0, 0, 2);
+}
+
+#btn-reset:hover {
+    -fx-background-color: linear-gradient(to bottom, #f07070, #d85858);
+    -fx-effect: dropshadow(gaussian, rgba(220,90,90,0.60), 10, 0, 0, 3);
+    -fx-scale-x: 1.025;
+    -fx-scale-y: 1.025;
+}
+
+#btn-reset:pressed {
+    -fx-background-color: linear-gradient(to bottom, #b03030, #962828);
+    -fx-scale-x: 0.975;
+    -fx-scale-y: 0.975;
+}
+
+/* ── Separators ───────────────────────────────────────── */
+.separator .line {
+    -fx-border-color: #1e1e32;
+    -fx-border-width: 1;
+    -fx-opacity: 0.8;
+}
+
+/* ── Status / message labels ──────────────────────────── */
+.status-success {
+    -fx-text-fill: #a6e3a1;
+    -fx-font-weight: bold;
     -fx-font-size: 11px;
 }
 
-/* Filter buttons inherit .button but get full width */
-#filter-panel .button {
-    -fx-pref-width: 178;
-}
-
-/* TextFields in filter panel match button width */
-#filter-panel .text-field {
-    -fx-text-fill: #151821;
-    -fx-font-size: 12px;
-    -fx-max-width: 175;
-}
-
-/* Status labels for messages */
-.status-success {
-    -fx-text-fill: #51CF66;
-    -fx-font-weight: bold;
-}
-
 .status-error {
-    -fx-text-fill: #FF6B6B;
+    -fx-text-fill: #f38ba8;
     -fx-font-weight: bold;
+    -fx-font-size: 11px;
 }
 
 .status-info {
-    -fx-text-fill: #4C72E8;
+    -fx-text-fill: #89b4fa;
     -fx-font-weight: bold;
+    -fx-font-size: 11px;
 }
 
-/* Improved label styling */
+#panelStatusLabel {
+    -fx-padding: 4 8 4 8;
+    -fx-background-color: rgba(255,255,255,0.04);
+    -fx-background-radius: 5;
+    -fx-border-color: #1e1e32;
+    -fx-border-width: 1;
+    -fx-border-radius: 5;
+}
+
+/* ── Misc: result count label ─────────────────────────── */
+#resultCountLabel {
+    -fx-text-fill: #44475a;
+    -fx-font-size: 11px;
+    -fx-padding: 0 0 0 2;
+}
+
+/* ── Global label baseline ────────────────────────────── */
 .label {
     -fx-font-family: "Segoe UI", sans-serif;
+    -fx-text-fill: #cdd6f4;
 }
 
-/* Tab and accordion styling */
+/* ── ScrollPane chrome ────────────────────────────────── */
+.scroll-pane {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}
+
+.scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+
+/* ── Tab / Accordion (if used) ────────────────────────── */
 .tab {
-    -fx-background-color: #1e1e2e;
+    -fx-background-color: #1a1a2c;
+    -fx-padding: 5 14 5 14;
 }
 
 .tab:selected {
-    -fx-background-color: #4C72E8;
+    -fx-background-color: #4465e8;
+}
+
+.tab-label {
+    -fx-text-fill: #8891b4;
+    -fx-font-size: 12px;
+}
+
+.tab:selected .tab-label {
+    -fx-text-fill: #ffffff;
+    -fx-font-weight: bold;
 }

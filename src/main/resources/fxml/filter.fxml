@@ -2,61 +2,73 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox id="filter-panel" spacing="8"
+<VBox id="filter-panel" spacing="10"
       xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="com.imagemanager.controller.FilterController">
 
-    <Label text="PANNEAU FILTRES" id="filter-panel-title"/>
+    <!-- ── Title ─────────────────────────────────── -->
+    <Label text="FILTRES &amp; OUTILS" id="filter-panel-title"/>
 
     <Separator/>
 
-    <VBox spacing="4">
-        <Label text="Couleurs" styleClass="section-label"/>
-        <Button text="Sépia"        onAction="#handleSepiaFilter"/>
-        <Button text="Noir &amp; Blanc" onAction="#handleNoirBlancFilter"/>
-        <Button text="RGB Swap"     onAction="#handleRGBSwapFilter"/>
-        <Button text="Contours (Prewitt)" onAction="#handlePrewittFilter"/>
+    <!-- ── Couleurs ──────────────────────────────── -->
+    <VBox spacing="5">
+        <Label text="COULEURS" styleClass="section-label"/>
+        <Button text="🎨  Sépia"              onAction="#handleSepiaFilter"/>
+        <Button text="⬛  Noir &amp; Blanc"   onAction="#handleNoirBlancFilter"/>
+        <Button text="🔀  RGB Swap"           onAction="#handleRGBSwapFilter"/>
+        <Button text="✏  Contours (Prewitt)" onAction="#handlePrewittFilter"/>
     </VBox>
 
     <Separator/>
 
-    <VBox spacing="4">
-        <Label text="Transformations" styleClass="section-label"/>
-        <Button text="↺ -90°" onAction="#RotateGauche"/>
-        <Button text="↻ +90°" onAction="#RotationDroite"/>
-        <Button text="↔ Miroir H" onAction="#SymmetrieHorizontale"/>
-        <Button text="↕ Miroir V" onAction="#SymmetrieVerticale"/>
+    <!-- ── Transformations ───────────────────────── -->
+    <VBox spacing="5">
+        <Label text="TRANSFORMATIONS" styleClass="section-label"/>
+        <Button text="↺  Rotation −90°"   onAction="#RotateGauche"/>
+        <Button text="↻  Rotation +90°"   onAction="#RotationDroite"/>
+        <Button text="↔  Miroir H"        onAction="#SymmetrieHorizontale"/>
+        <Button text="↕  Miroir V"        onAction="#SymmetrieVerticale"/>
     </VBox>
 
     <Separator/>
 
-    <VBox spacing="8">
-        <Label text="Détection &amp; Sécurité" styleClass="section-label"/>
-        <TextField fx:id="passwordField" promptText="Entrer mot de passe"/>
-        <Button text="Chiffrer" onAction="#handleEncrypt"/>
-        <Button text="Déchiffrer" onAction="#handleDecrypt"/>
-    </VBox>
-
-    <Separator/>
-
-    <VBox spacing="8">
-        <Label text="Tags" styleClass="section-label"/>
-        <HBox spacing="5">
-            <TextField fx:id="tagInputField" promptText="Ajouter tag" HBox.hgrow="ALWAYS"/>
-            <Button text="+" onAction="#handleAddTag" style="-fx-min-width: 40;"/>
+    <!-- ── Sécurité ───────────────────────────────── -->
+    <VBox spacing="6">
+        <Label text="SÉCURITÉ" styleClass="section-label"/>
+        <TextField fx:id="passwordField" promptText="🔑  Mot de passe…"/>
+        <HBox spacing="6">
+            <Button text="🔒  Chiffrer"   onAction="#handleEncrypt"   HBox.hgrow="ALWAYS" style="-fx-pref-width: 86;"/>
+            <Button text="🔓  Déchiffrer" onAction="#handleDecrypt"   HBox.hgrow="ALWAYS" style="-fx-pref-width: 86;"/>
         </HBox>
-        <Label fx:id="tagsLabel" text="Tags: (none)" wrapText="true" style="-fx-font-size: 10;"/>
     </VBox>
 
+    <Separator/>
+
+    <!-- ── Tags ──────────────────────────────────── -->
+    <VBox spacing="6">
+        <Label text="TAGS" styleClass="section-label"/>
+        <HBox spacing="6" alignment="CENTER_LEFT">
+            <TextField fx:id="tagInputField" promptText="Ajouter un tag…" HBox.hgrow="ALWAYS"/>
+            <Button text="＋" onAction="#handleAddTag"
+                    style="-fx-min-width: 32; -fx-padding: 6 8 6 8;"/>
+        </HBox>
+        <Label fx:id="tagsLabel" text="Tags: (aucun)" wrapText="true"/>
+    </VBox>
+
+    <!-- ── Spacer ─────────────────────────────────── -->
     <Region VBox.vgrow="ALWAYS"/>
 
     <Separator/>
 
-    <VBox spacing="10">
-        <Button text="💾 Sauvegarder Métadonnées" onAction="#handleSaveMetadata" style="-fx-padding: 8;"/>
-        <Button id="btn-reset" text="Réinitialiser" onAction="#handleReset"/>
-        <Label fx:id="panelStatusLabel" text="Ready" wrapText="true" style="-fx-font-size: 10;" styleClass="status-info"/>
+    <!-- ── Actions bas ────────────────────────────── -->
+    <VBox spacing="8">
+        <Button text="💾  Sauvegarder Métadonnées" onAction="#handleSaveMetadata"
+                style="-fx-pref-width: 182;"/>
+        <Button id="btn-reset" text="⟳  Réinitialiser" onAction="#handleReset"
+                style="-fx-pref-width: 182;"/>
+        <Label fx:id="panelStatusLabel" text="Prêt" wrapText="true"
+               styleClass="status-info" id="panelStatusLabel"/>
     </VBox>
 
 </VBox>
-

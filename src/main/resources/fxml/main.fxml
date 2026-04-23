@@ -9,11 +9,11 @@
 
     <top>
         <VBox spacing="0">
-            <HBox id="top-bar">
-                <Label text="Gestionnaire d'image" id="titre"/>
+            <HBox id="top-bar" alignment="CENTER_LEFT" spacing="14">
+                <Label text="🖼  Gestionnaire d'image" id="titre"/>
                 <Region HBox.hgrow="ALWAYS"/>
-                <Button text="📁 Ouvrir image" onAction="#handleOpenImage"/>
-                <Separator orientation="VERTICAL"/>
+                <Button text="📁  Ouvrir image" onAction="#handleOpenImage"/>
+                <Separator orientation="VERTICAL" style="-fx-padding: 0 4 0 4;"/>
                 <Label fx:id="labelStatut" text="Prêt"/>
             </HBox>
         </VBox>
@@ -24,15 +24,17 @@
     </left>
 
     <center>
-        <ScrollPane id="canvas-scroll" fitToHeight="true" fitToWidth="true">
+        <ScrollPane id="canvas-scroll" fitToHeight="true" fitToWidth="true" pannable="true">
             <StackPane styleClass="canvas-stack" alignment="CENTER">
-                <ImageView fx:id="imageView" preserveRatio="true" fitWidth="600" fitHeight="450" StackPane.alignment="CENTER"/>
+                <ImageView fx:id="imageView" preserveRatio="true"
+                           fitWidth="620" fitHeight="460"
+                           StackPane.alignment="CENTER"/>
             </StackPane>
         </ScrollPane>
     </center>
 
     <right>
-        <ScrollPane fitToWidth="true">
+        <ScrollPane fitToWidth="true" style="-fx-background-color: #14141f;">
             <fx:include fx:id="filter" source="filter.fxml"/>
         </ScrollPane>
     </right>
