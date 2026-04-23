@@ -8,14 +8,14 @@ import javafx.scene.paint.Color;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Decryption filter that reverses pixel shuffling based on a password.
- * Uses the same SHA-256 seeding as EncryptionFilter for deterministic unshuffling.
+ * Uses the same deterministic random as EncryptionFilter to reverse the shuffle.
  */
 public class DecryptionFilter implements Filter {
     private final String password;
@@ -30,24 +30,15 @@ public class DecryptionFilter implements Filter {
         int height = (int) source.getHeight();
         int totalPixels = width * height;
 
-        // Create pixel index list (in same order as EncryptionFilter)
+        // Create pixel index list
         List<Integer> indices = new ArrayList<>();
         for (int i = 0; i < totalPixels; i++) {
             indices.add(i);
         }
 
-        // Shuffle indices using password-seeded random (same as encryption)
-        SecureRandom random = getRandomFromPassword();
+        // Get the SAME shuffle order as encryption (seed with password hash)
+        Random random = getRandomFromPassword();
         Collections.shuffle(indices, random);
-
-        // Create inverse mapping: where did pixel at position i come from?
-        List<Integer> inverseIndices = new ArrayList<>();
-        for (int i = 0; i < totalPixels; i++) {
-            inverseIndices.add(0);
-        }
-        for (int i = 0; i < indices.size(); i++) {
-            inverseIndices.set(indices.get(i), i);
-        }
 
         // Read encrypted pixels
         PixelReader reader = source.getPixelReader();
@@ -58,14 +49,18 @@ public class DecryptionFilter implements Filter {
             encryptedPixels[i] = reader.getColor(x, y);
         }
 
-        // Reverse the shuffling using inverse mapping
+        // Create result image
         WritableImage result = new WritableImage(width, height);
         PixelWriter writer = result.getPixelWriter();
-        for (int originalIndex = 0; originalIndex < totalPixels; originalIndex++) {
-            int encryptedIndex = inverseIndices.get(originalIndex);
+
+        // To decrypt: reverse the shuffle
+        // If encryption put pixel from originalIndex into shuffledIndex position,
+        // Then decryption takes pixel from shuffledIndex and puts it back at originalIndex
+        for (int shuffledPos = 0; shuffledPos < totalPixels; shuffledPos++) {
+            int originalIndex = indices.get(shuffledPos);
             int originalX = originalIndex % width;
             int originalY = originalIndex / width;
-            writer.setColor(originalX, originalY, encryptedPixels[encryptedIndex]);
+            writer.setColor(originalX, originalY, encryptedPixels[shuffledPos]);
         }
 
         return result;
@@ -77,14 +72,19 @@ public class DecryptionFilter implements Filter {
     }
 
     /**
-     * Create a SecureRandom seeded with the password hash (same as EncryptionFilter).
+     * Create a Random seeded with the password hash (same as EncryptionFilter).
      */
-    private SecureRandom getRandomFromPassword() {
+    private Random getRandomFromPassword() {
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
             byte[] hash = digest.digest(password.getBytes());
-            SecureRandom random = new SecureRandom();
-            random.setSeed(hash);
+            Random random = new Random();
+            // Convert first 8 bytes to long for seed
+            long seed = 0;
+            for (int i = 0; i < Math.min(8, hash.length); i++) {
+                seed = (seed << 8) | (hash[i] & 0xFF);
+            }
+            random.setSeed(seed);
             return random;
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException("SHA-256 not available", e);

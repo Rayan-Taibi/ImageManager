@@ -42,9 +42,10 @@ public class MainController {
         imageView.setImage(image);
         this.originalImage = image;
         
-        // Pass the loaded image to FilterController
+        // Pass the loaded image AND the file path to FilterController
         if (filterController != null) {
             filterController.setOriginalImage(image);
+            filterController.setImagePath(selectedFile.getAbsolutePath());
         }
         
         labelStatut.setText("Image chargée : " + selectedFile.getName());

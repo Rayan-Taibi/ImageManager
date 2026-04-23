@@ -8,14 +8,14 @@ import javafx.scene.paint.Color;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Encryption filter that shuffles pixels based on a password.
- * Uses SecureRandom seeded with SHA-256 hash of the password.
+ * Uses Random seeded with SHA-256 hash of the password for deterministic shuffling.
  */
 public class EncryptionFilter implements Filter {
     private final String password;
@@ -37,10 +37,10 @@ public class EncryptionFilter implements Filter {
         }
 
         // Shuffle indices using password-seeded random
-        SecureRandom random = getRandomFromPassword();
+        Random random = getRandomFromPassword();
         Collections.shuffle(indices, random);
 
-        // Read source pixels
+        // Read source pixels in linear order
         PixelReader reader = source.getPixelReader();
         Color[] originalPixels = new Color[totalPixels];
         for (int i = 0; i < totalPixels; i++) {
@@ -50,6 +50,7 @@ public class EncryptionFilter implements Filter {
         }
 
         // Write shuffled pixels to new image
+        // indices.get(i) tells us which original pixel goes to position i
         WritableImage result = new WritableImage(width, height);
         PixelWriter writer = result.getPixelWriter();
         for (int newIndex = 0; newIndex < totalPixels; newIndex++) {
@@ -68,16 +69,19 @@ public class EncryptionFilter implements Filter {
     }
 
     /**
-     * Create a SecureRandom seeded with the password hash.
-     *
-     * @return SecureRandom instance
+     * Create a Random seeded with the password hash.
      */
-    private SecureRandom getRandomFromPassword() {
+    private Random getRandomFromPassword() {
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
             byte[] hash = digest.digest(password.getBytes());
-            SecureRandom random = new SecureRandom();
-            random.setSeed(hash);
+            Random random = new Random();
+            // Convert first 8 bytes to long for seed
+            long seed = 0;
+            for (int i = 0; i < Math.min(8, hash.length); i++) {
+                seed = (seed << 8) | (hash[i] & 0xFF);
+            }
+            random.setSeed(seed);
             return random;
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException("SHA-256 not available", e);

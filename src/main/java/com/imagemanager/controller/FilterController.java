@@ -44,10 +44,10 @@ public class FilterController {
 
     public void setOriginalImage(Image originalImage) {
         this.originalImage = originalImage;
-        // Auto-set a path if not already set
-        if (this.currentImagePath == null) {
-            this.currentImagePath = "loaded_image_" + System.currentTimeMillis();
-        }
+    }
+
+    public void setImagePath(String imagePath) {
+        this.currentImagePath = imagePath;
     }
 
     @FXML
