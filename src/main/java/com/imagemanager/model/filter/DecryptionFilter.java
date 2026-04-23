@@ -8,10 +8,10 @@ import javafx.scene.paint.Color;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 
 /**
  * Decryption filter that reverses pixel shuffling based on a password.
@@ -37,7 +37,7 @@ public class DecryptionFilter implements Filter {
         }
 
         // Get the SAME shuffle order as encryption (seed with password hash)
-        Random random = getRandomFromPassword();
+        SecureRandom random = getRandomFromPassword();
         Collections.shuffle(indices, random);
 
         // Read encrypted pixels
@@ -72,19 +72,14 @@ public class DecryptionFilter implements Filter {
     }
 
     /**
-     * Create a Random seeded with the password hash (same as EncryptionFilter).
+     * Create a SecureRandom seeded with the password hash (same as EncryptionFilter).
      */
-    private Random getRandomFromPassword() {
+    private SecureRandom getRandomFromPassword() {
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
             byte[] hash = digest.digest(password.getBytes());
-            Random random = new Random();
-            // Convert first 8 bytes to long for seed
-            long seed = 0;
-            for (int i = 0; i < Math.min(8, hash.length); i++) {
-                seed = (seed << 8) | (hash[i] & 0xFF);
-            }
-            random.setSeed(seed);
+            SecureRandom random = new SecureRandom();
+            random.setSeed(hash);
             return random;
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException("SHA-256 not available", e);
