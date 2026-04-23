@@ -1,156 +1,30 @@
 {
-  "loaded_image_1776951816753" : {
-    "imagePath" : "loaded_image_1776951816753",
-    "tags" : [ {
-      "value" : "pppp"
-    } ],
-    "transformations" : [ {
-      "name" : "RGBSwap",
-      "type" : "filter",
-      "parameter" : null
-    }, {
-      "name" : "RotateGauche",
-      "type" : "transform",
-      "parameter" : null
-    }, {
-      "name" : "RotationDroite",
-      "type" : "transform",
-      "parameter" : null
-    }, {
-      "name" : "RGBSwap",
-      "type" : "filter",
-      "parameter" : null
-    }, {
-      "name" : "RGBSwap",
-      "type" : "filter",
-      "parameter" : null
-    }, {
-      "name" : "SymmetrieVerticale",
-      "type" : "transform",
-      "parameter" : null
-    }, {
-      "name" : "SymmetrieVerticale",
-      "type" : "transform",
-      "parameter" : null
-    }, {
-      "name" : "SymmetrieVerticale",
-      "type" : "transform",
-      "parameter" : null
-    }, {
-      "name" : "SymmetrieVerticale",
-      "type" : "transform",
-      "parameter" : null
-    } ]
-  },
   "C:\\Users\\rmdzv\\OneDrive\\Images\\2025-04-26\\001.jpg" : {
     "imagePath" : "C:\\Users\\rmdzv\\OneDrive\\Images\\2025-04-26\\001.jpg",
-    "tags" : [ {
-      "value" : "79"
-    } ],
-    "transformations" : [ {
-      "name" : "RotationDroite",
-      "type" : "transform",
-      "parameter" : null
-    }, {
-      "name" : "Prewitt",
-      "type" : "filter",
-      "parameter" : null
-    } ]
-  },
-  "loaded_image_1776957184917" : {
-    "imagePath" : "loaded_image_1776957184917",
     "tags" : [ ],
     "transformations" : [ {
-      "name" : "RGBSwap",
-      "type" : "filter",
+      "name" : "RotateGauche",
+      "type" : "transform",
       "parameter" : null
     }, {
-      "name" : "NoireBlanc",
-      "type" : "filter",
+      "name" : "RotateGauche",
+      "type" : "transform",
       "parameter" : null
     }, {
-      "name" : "Sepia",
-      "type" : "filter",
+      "name" : "RotateGauche",
+      "type" : "transform",
       "parameter" : null
     }, {
-      "name" : "RGBSwap",
-      "type" : "filter",
+      "name" : "RotateGauche",
+      "type" : "transform",
       "parameter" : null
     }, {
-      "name" : "Sepia",
-      "type" : "filter",
+      "name" : "RotateGauche",
+      "type" : "transform",
       "parameter" : null
     }, {
-      "name" : "RGBSwap",
-      "type" : "filter",
-      "parameter" : null
-    }, {
-      "name" : "RGBSwap",
-      "type" : "filter",
-      "parameter" : null
-    }, {
-      "name" : "RGBSwap",
-      "type" : "filter",
-      "parameter" : null
-    }, {
-      "name" : "Sepia",
-      "type" : "filter",
-      "parameter" : null
-    }, {
-      "name" : "Sepia",
-      "type" : "filter",
-      "parameter" : null
-    }, {
-      "name" : "Sepia",
-      "type" : "filter",
-      "parameter" : null
-    }, {
-      "name" : "RGBSwap",
-      "type" : "filter",
-      "parameter" : null
-    }, {
-      "name" : "RGBSwap",
-      "type" : "filter",
-      "parameter" : null
-    }, {
-      "name" : "RGBSwap",
-      "type" : "filter",
-      "parameter" : null
-    }, {
-      "name" : "NoireBlanc",
-      "type" : "filter",
-      "parameter" : null
-    }, {
-      "name" : "Prewitt",
-      "type" : "filter",
-      "parameter" : null
-    }, {
-      "name" : "NoireBlanc",
-      "type" : "filter",
-      "parameter" : null
-    }, {
-      "name" : "Sepia",
-      "type" : "filter",
-      "parameter" : null
-    }, {
-      "name" : "RGBSwap",
-      "type" : "filter",
-      "parameter" : null
-    }, {
-      "name" : "NoireBlanc",
-      "type" : "filter",
-      "parameter" : null
-    }, {
-      "name" : "Prewitt",
-      "type" : "filter",
-      "parameter" : null
-    }, {
-      "name" : "NoireBlanc",
-      "type" : "filter",
-      "parameter" : null
-    }, {
-      "name" : "Sepia",
-      "type" : "filter",
+      "name" : "RotateGauche",
+      "type" : "transform",
       "parameter" : null
     }, {
       "name" : "Encryption",
@@ -161,230 +35,11 @@
       "type" : "filter",
       "parameter" : null
     }, {
-      "name" : "SymmetrieVerticale",
-      "type" : "transform",
-      "parameter" : null
-    } ]
-  },
-  "C:\\Users\\rmdzv\\OneDrive\\Images\\Camera imports\\2024-09-17\\1000014616.jpg" : {
-    "imagePath" : "C:\\Users\\rmdzv\\OneDrive\\Images\\Camera imports\\2024-09-17\\1000014616.jpg",
-    "tags" : [ ],
-    "transformations" : [ {
       "name" : "RGBSwap",
       "type" : "filter",
       "parameter" : null
     }, {
       "name" : "RGBSwap",
-      "type" : "filter",
-      "parameter" : null
-    }, {
-      "name" : "RGBSwap",
-      "type" : "filter",
-      "parameter" : null
-    }, {
-      "name" : "RGBSwap",
-      "type" : "filter",
-      "parameter" : null
-    }, {
-      "name" : "RGBSwap",
-      "type" : "filter",
-      "parameter" : null
-    }, {
-      "name" : "RGBSwap",
-      "type" : "filter",
-      "parameter" : null
-    }, {
-      "name" : "RGBSwap",
-      "type" : "filter",
-      "parameter" : null
-    }, {
-      "name" : "RGBSwap",
-      "type" : "filter",
-      "parameter" : null
-    }, {
-      "name" : "RGBSwap",
-      "type" : "filter",
-      "parameter" : null
-    }, {
-      "name" : "RGBSwap",
-      "type" : "filter",
-      "parameter" : null
-    }, {
-      "name" : "RGBSwap",
-      "type" : "filter",
-      "parameter" : null
-    }, {
-      "name" : "RGBSwap",
-      "type" : "filter",
-      "parameter" : null
-    }, {
-      "name" : "RGBSwap",
-      "type" : "filter",
-      "parameter" : null
-    }, {
-      "name" : "RGBSwap",
-      "type" : "filter",
-      "parameter" : null
-    }, {
-      "name" : "RGBSwap",
-      "type" : "filter",
-      "parameter" : null
-    }, {
-      "name" : "RGBSwap",
-      "type" : "filter",
-      "parameter" : null
-    }, {
-      "name" : "RGBSwap",
-      "type" : "filter",
-      "parameter" : null
-    }, {
-      "name" : "RGBSwap",
-      "type" : "filter",
-      "parameter" : null
-    }, {
-      "name" : "RGBSwap",
-      "type" : "filter",
-      "parameter" : null
-    }, {
-      "name" : "RGBSwap",
-      "type" : "filter",
-      "parameter" : null
-    }, {
-      "name" : "RGBSwap",
-      "type" : "filter",
-      "parameter" : null
-    }, {
-      "name" : "RGBSwap",
-      "type" : "filter",
-      "parameter" : null
-    }, {
-      "name" : "RGBSwap",
-      "type" : "filter",
-      "parameter" : null
-    }, {
-      "name" : "NoireBlanc",
-      "type" : "filter",
-      "parameter" : null
-    }, {
-      "name" : "NoireBlanc",
-      "type" : "filter",
-      "parameter" : null
-    }, {
-      "name" : "RGBSwap",
-      "type" : "filter",
-      "parameter" : null
-    }, {
-      "name" : "Prewitt",
-      "type" : "filter",
-      "parameter" : null
-    }, {
-      "name" : "Encryption",
-      "type" : "filter",
-      "parameter" : null
-    }, {
-      "name" : "Decryption",
-      "type" : "filter",
-      "parameter" : null
-    } ]
-  },
-  "loaded_image_1776950731589" : {
-    "imagePath" : "loaded_image_1776950731589",
-    "tags" : [ {
-      "value" : "izan"
-    } ],
-    "transformations" : [ {
-      "name" : "NoireBlanc",
-      "type" : "filter",
-      "parameter" : null
-    }, {
-      "name" : "Sepia",
-      "type" : "filter",
-      "parameter" : null
-    }, {
-      "name" : "Prewitt",
-      "type" : "filter",
-      "parameter" : null
-    }, {
-      "name" : "RGBSwap",
-      "type" : "filter",
-      "parameter" : null
-    }, {
-      "name" : "RGBSwap",
-      "type" : "filter",
-      "parameter" : null
-    }, {
-      "name" : "RGBSwap",
-      "type" : "filter",
-      "parameter" : null
-    }, {
-      "name" : "RotateGauche",
-      "type" : "transform",
-      "parameter" : null
-    }, {
-      "name" : "RotateGauche",
-      "type" : "transform",
-      "parameter" : null
-    }, {
-      "name" : "RotateGauche",
-      "type" : "transform",
-      "parameter" : null
-    }, {
-      "name" : "RotateGauche",
-      "type" : "transform",
-      "parameter" : null
-    }, {
-      "name" : "RotationDroite",
-      "type" : "transform",
-      "parameter" : null
-    }, {
-      "name" : "RotationDroite",
-      "type" : "transform",
-      "parameter" : null
-    }, {
-      "name" : "RotationDroite",
-      "type" : "transform",
-      "parameter" : null
-    }, {
-      "name" : "RotationDroite",
-      "type" : "transform",
-      "parameter" : null
-    }, {
-      "name" : "SymmetrieHorizontale",
-      "type" : "transform",
-      "parameter" : null
-    }, {
-      "name" : "SymmetrieHorizontale",
-      "type" : "transform",
-      "parameter" : null
-    }, {
-      "name" : "SymmetrieVerticale",
-      "type" : "transform",
-      "parameter" : null
-    }, {
-      "name" : "SymmetrieVerticale",
-      "type" : "transform",
-      "parameter" : null
-    }, {
-      "name" : "Encryption",
-      "type" : "filter",
-      "parameter" : null
-    }, {
-      "name" : "RotationDroite",
-      "type" : "transform",
-      "parameter" : null
-    } ]
-  },
-  "loaded_image_1776952711638" : {
-    "imagePath" : "loaded_image_1776952711638",
-    "tags" : [ {
-      "value" : "mmm"
-    } ],
-    "transformations" : [ {
-      "name" : "Encryption",
-      "type" : "filter",
-      "parameter" : null
-    }, {
-      "name" : "Decryption",
       "type" : "filter",
       "parameter" : null
     } ]
@@ -392,57 +47,11 @@
   "C:\\Users\\rmdzv\\OneDrive\\Images\\alien.jpg" : {
     "imagePath" : "C:\\Users\\rmdzv\\OneDrive\\Images\\alien.jpg",
     "tags" : [ {
-      "value" : "psps"
+      "value" : "izan"
     }, {
-      "value" : "tag"
-    }, {
-      "value" : "ppt"
+      "value" : "pp"
     } ],
     "transformations" : [ {
-      "name" : "Sepia",
-      "type" : "filter",
-      "parameter" : null
-    }, {
-      "name" : "NoireBlanc",
-      "type" : "filter",
-      "parameter" : null
-    }, {
-      "name" : "RGBSwap",
-      "type" : "filter",
-      "parameter" : null
-    }, {
-      "name" : "RGBSwap",
-      "type" : "filter",
-      "parameter" : null
-    }, {
-      "name" : "Prewitt",
-      "type" : "filter",
-      "parameter" : null
-    }, {
-      "name" : "RGBSwap",
-      "type" : "filter",
-      "parameter" : null
-    }, {
-      "name" : "RGBSwap",
-      "type" : "filter",
-      "parameter" : null
-    }, {
-      "name" : "RGBSwap",
-      "type" : "filter",
-      "parameter" : null
-    }, {
-      "name" : "Sepia",
-      "type" : "filter",
-      "parameter" : null
-    }, {
-      "name" : "RGBSwap",
-      "type" : "filter",
-      "parameter" : null
-    }, {
-      "name" : "RGBSwap",
-      "type" : "filter",
-      "parameter" : null
-    }, {
       "name" : "RGBSwap",
       "type" : "filter",
       "parameter" : null
@@ -455,36 +64,8 @@
       "type" : "filter",
       "parameter" : null
     }, {
-      "name" : "Encryption",
-      "type" : "filter",
-      "parameter" : null
-    }, {
-      "name" : "Decryption",
-      "type" : "filter",
-      "parameter" : null
-    }, {
-      "name" : "NoireBlanc",
-      "type" : "filter",
-      "parameter" : null
-    }, {
       "name" : "RGBSwap",
       "type" : "filter",
-      "parameter" : null
-    }, {
-      "name" : "RotateGauche",
-      "type" : "transform",
-      "parameter" : null
-    }, {
-      "name" : "RotateGauche",
-      "type" : "transform",
-      "parameter" : null
-    }, {
-      "name" : "RotateGauche",
-      "type" : "transform",
-      "parameter" : null
-    }, {
-      "name" : "RotateGauche",
-      "type" : "transform",
       "parameter" : null
     } ]
   }
