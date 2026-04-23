@@ -40,6 +40,15 @@ public class DecryptionFilter implements Filter {
         SecureRandom random = getRandomFromPassword();
         Collections.shuffle(indices, random);
 
+        // Create inverse mapping: where did pixel at position i come from?
+        List<Integer> inverseIndices = new ArrayList<>();
+        for (int i = 0; i < totalPixels; i++) {
+            inverseIndices.add(0);
+        }
+        for (int i = 0; i < indices.size(); i++) {
+            inverseIndices.set(indices.get(i), i);
+        }
+
         // Read encrypted pixels
         PixelReader reader = source.getPixelReader();
         Color[] encryptedPixels = new Color[totalPixels];
@@ -49,16 +58,14 @@ public class DecryptionFilter implements Filter {
             encryptedPixels[i] = reader.getColor(x, y);
         }
 
-        // Reverse the shuffling: for each shuffled position, find where it came from
+        // Reverse the shuffling using inverse mapping
         WritableImage result = new WritableImage(width, height);
         PixelWriter writer = result.getPixelWriter();
-        for (int shuffledIndex = 0; shuffledIndex < totalPixels; shuffledIndex++) {
-            int originalIndex = indices.get(shuffledIndex);
-            int newX = shuffledIndex % width;
-            int newY = shuffledIndex / width;
+        for (int originalIndex = 0; originalIndex < totalPixels; originalIndex++) {
+            int encryptedIndex = inverseIndices.get(originalIndex);
             int originalX = originalIndex % width;
             int originalY = originalIndex / width;
-            writer.setColor(originalX, originalY, encryptedPixels[shuffledIndex]);
+            writer.setColor(originalX, originalY, encryptedPixels[encryptedIndex]);
         }
 
         return result;
