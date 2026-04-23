@@ -26,13 +26,15 @@
     <center>
         <ScrollPane id="canvas-scroll" fitToHeight="true" fitToWidth="true">
             <StackPane styleClass="canvas-stack" alignment="CENTER">
-                <ImageView fx:id="imageView" preserveRatio="true" fitWidth="800" fitHeight="600" StackPane.alignment="CENTER"/>
+                <ImageView fx:id="imageView" preserveRatio="true" fitWidth="600" fitHeight="450" StackPane.alignment="CENTER"/>
             </StackPane>
         </ScrollPane>
     </center>
 
     <right>
-        <fx:include fx:id="filter" source="filter.fxml"/>
+        <ScrollPane fitToWidth="true">
+            <fx:include fx:id="filter" source="filter.fxml"/>
+        </ScrollPane>
     </right>
 
 </BorderPane>

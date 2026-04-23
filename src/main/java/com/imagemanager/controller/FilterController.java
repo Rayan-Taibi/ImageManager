@@ -26,6 +26,7 @@ public class FilterController {
     // Injected from MainController
     private ImageView imageView;
     private Label mainStatusLabel;
+    private LibraryController libraryController;
 
     private Image originalImage;
     private String currentImagePath;
@@ -43,6 +44,10 @@ public class FilterController {
 
     public void setImageView(ImageView iv) {
         this.imageView = iv;
+    }
+
+    public void setLibraryController(LibraryController libraryController) {
+        this.libraryController = libraryController;
     }
 
     /** Updates the top status bar in main.fxml (labelStatut). */
@@ -255,6 +260,9 @@ public class FilterController {
     public void handleSaveMetadata() {
         metadataManager.saveAll();
         updateStatus("Saved");
+        if (libraryController != null) {
+            libraryController.refresh();
+        }
     }
 
     private void updateStatus(String msg) {

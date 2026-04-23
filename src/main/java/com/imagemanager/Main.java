@@ -10,8 +10,9 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/fxml/main.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 800, 600);
+        Scene scene = new Scene(fxmlLoader.load(), 1024, 600);
         stage.setTitle("Gestionnaire d'Images");
+        stage.setResizable(true); // Allow resizing
         stage.setScene(scene);
         stage.show();
     }

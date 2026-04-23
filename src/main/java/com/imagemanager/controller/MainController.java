@@ -3,7 +3,6 @@ package com.imagemanager.controller;
 import java.io.File;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 
@@ -25,9 +24,10 @@ public class MainController {
         if (filterController != null) {
             filterController.setImageView(imageView);
             filterController.setMainStatusLabel(labelStatut);
+            filterController.setLibraryController(libraryController);
         }
-        if (libraryController != null && filterController != null) {
-            libraryController.setFilterController(filterController);
+        if (libraryController != null) {
+            libraryController.setMainController(this);
         }
     }
 
@@ -49,7 +49,13 @@ public class MainController {
 
         labelStatut.setText("Image chargée : " + selectedFile.getName());
     }
+public void loadImage(String imagePath) {
+        if (filterController != null) {
+            filterController.loadImageFromPath(imagePath);
+        }
+    }
 
+    
     @FXML
     protected void handleSepiaFilter() {
         if (filterController != null) {

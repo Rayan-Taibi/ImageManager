@@ -13,6 +13,7 @@ module com.imagemanager {
     opens com.imagemanager.model.persistence to javafx.fxml;
     
     exports com.imagemanager;
+    exports com.imagemanager.model.persistence;
     exports com.imagemanager.model.metadata to com.fasterxml.jackson.databind;
 }
 // define module and its dependencies, and specify which packages are open for reflection (for JavaFX) and which are exported for use by other modules.

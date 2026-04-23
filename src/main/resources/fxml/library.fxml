@@ -21,15 +21,7 @@
     </top>
 
     <center>
-        <SplitPane dividerPositions="0.6" VBox.vgrow="ALWAYS">
-            <ListView fx:id="imageListView" prefWidth="150" VBox.vgrow="ALWAYS"/>
-            <VBox spacing="10" style="-fx-padding: 10;">
-                <ImageView fx:id="previewImageView" fitWidth="200" fitHeight="200" preserveRatio="true"/>
-                <Label fx:id="infoLabel" wrapText="true" style="-fx-font-size: 10;"/>
-                <Button text="✅ Charger" onAction="#handleLoadForEditing"/>
-                <Button text="⟳ Rafraîchir" onAction="#handleRefresh" styleClass="secondary"/>
-            </VBox>
-        </SplitPane>
+        <ListView fx:id="imageListView" VBox.vgrow="ALWAYS"/>
     </center>
 
 </BorderPane>
