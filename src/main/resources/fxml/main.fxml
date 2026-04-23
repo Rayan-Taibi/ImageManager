@@ -25,8 +25,8 @@
 
     <center>
         <ScrollPane id="canvas-scroll" fitToHeight="true" fitToWidth="true">
-            <StackPane>
-                <ImageView fx:id="imageView" preserveRatio="true"/>
+            <StackPane styleClass="canvas-stack" alignment="CENTER">
+                <ImageView fx:id="imageView" preserveRatio="true" fitWidth="800" fitHeight="600" StackPane.alignment="CENTER"/>
             </StackPane>
         </ScrollPane>
     </center>

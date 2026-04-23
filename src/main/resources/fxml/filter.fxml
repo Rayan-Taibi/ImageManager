@@ -10,52 +10,30 @@
 
     <Separator/>
 
-    <VBox spacing="8">
+    <VBox spacing="4">
         <Label text="Couleurs" styleClass="section-label"/>
         <Button text="Sépia"        onAction="#handleSepiaFilter"/>
         <Button text="Noir &amp; Blanc" onAction="#handleNoirBlancFilter"/>
         <Button text="RGB Swap"     onAction="#handleRGBSwapFilter"/>
         <Button text="Contours (Prewitt)" onAction="#handlePrewittFilter"/>
-
     </VBox>
 
     <Separator/>
 
-    <VBox spacing="8">
+    <VBox spacing="4">
         <Label text="Transformations" styleClass="section-label"/>
         <Button text="↺ -90°" onAction="#RotateGauche"/>
         <Button text="↻ +90°" onAction="#RotationDroite"/>
         <Button text="↔ Miroir H" onAction="#SymmetrieHorizontale"/>
         <Button text="↕ Miroir V" onAction="#SymmetrieVerticale"/>
-
     </VBox>
 
     <Separator/>
 
     <VBox spacing="8">
-        <Label text="Tags" styleClass="section-label"/>
-        <HBox spacing="5">
-            <TextField fx:id="tagInputField" promptText="Enter tag..." HBox.hgrow="ALWAYS"/>
-            <Button text="+" onAction="#handleAddTag" prefWidth="40"/>
-        </HBox>
-        <Label fx:id="tagsLabel" text="Tags: (none)" wrapText="true"/>
-    </VBox>
+        <Label text="Détection &amp; Sécurité" styleClass="section-label"/>
+        <Button text="Chiffrer" />
 
-    <Separator/>
-
-    <VBox spacing="8">
-        <Label text="Chiffrement" styleClass="section-label"/>
-        <TextField fx:id="passwordField" promptText="Password..."/>
-        <HBox spacing="5">
-            <Button text="Chiffrer" onAction="#handleEncrypt" HBox.hgrow="ALWAYS"/>
-            <Button text="Déchiffrer" onAction="#handleDecrypt" HBox.hgrow="ALWAYS"/>
-        </HBox>
-    </VBox>
-
-    <Separator/>
-
-    <VBox spacing="8">
-        <Button text="💾 Sauvegarder Métadonnées" onAction="#handleSaveMetadata" maxWidth="Infinity"/>
     </VBox>
 
     <Region VBox.vgrow="ALWAYS"/>

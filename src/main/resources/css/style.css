@@ -45,9 +45,7 @@
     -fx-font-size: 12px;
 }
 
-/* ─────────────────────────────────────────
-   Buttons  (shared base)
-───────────────────────────────────────── */
+
 .button {
     -fx-background-color: #313244;
     -fx-text-fill: #cdd6f4;
@@ -92,8 +90,8 @@
 
 #filter-panel {
     -fx-pref-width: 210;
-    -fx-padding: 16;
-    -fx-spacing: 15;
+    -fx-padding: 8;
+    -fx-spacing: 8;
     -fx-background-color: #181825;
     -fx-border-color: #313244;
     -fx-border-width: 0 0 0 1;
@@ -116,4 +114,11 @@
 /* Filter buttons inherit .button but get full width */
 #filter-panel .button {
     -fx-pref-width: 178;
+}
+
+/* TextFields in filter panel match button width */
+#filter-panel .text-field {
+    -fx-text-fill: #151821;
+    -fx-font-size: 12px;
+    -fx-max-width: 175;
 }
