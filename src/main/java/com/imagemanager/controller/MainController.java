@@ -46,6 +46,9 @@ public class MainController {
         if (filterController != null) {
             filterController.setOriginalImage(image);
             filterController.setImagePath(selectedFile.getAbsolutePath());
+            // Load transformations from metadata and apply them
+            filterController.loadAndApplyTransformations(selectedFile.getAbsolutePath());
+            filterController.loadTags();
         }
         
         labelStatut.setText("Image chargée : " + selectedFile.getName());
@@ -87,3 +90,4 @@ public class MainController {
     }
 
 }
+

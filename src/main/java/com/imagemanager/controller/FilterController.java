@@ -209,7 +209,8 @@ public class FilterController {
     /**
      * Load and display tags for current image.
      */
-    private void loadTags() {
+    @FXML
+    public void loadTags() {
         if (currentImagePath == null || metadataManager == null) {
             return;
         }
@@ -224,6 +225,98 @@ public class FilterController {
 
         if (tagsLabel != null) {
             tagsLabel.setText(tagText.toString());
+        }
+    }
+
+    /**
+     * Load transformations from metadata and apply them in order.
+     * This ensures that when an image is loaded, all previously applied filters are reapplied.
+     */
+    public void loadAndApplyTransformations(String imagePath) {
+        if (metadataManager == null || imageView == null || imageView.getImage() == null) {
+            return;
+        }
+
+        var transformations = metadataManager.getTransformations(imagePath);
+        if (transformations.isEmpty()) {
+            return;
+        }
+
+        Image currentImage = imageView.getImage();
+        
+        // Apply each transformation in order
+        for (Transformation t : transformations) {
+            String transformationName = t.name();
+            
+            if ("filter".equals(t.type())) {
+                // Apply filter transformations
+                currentImage = applyFilterByName(transformationName, currentImage);
+            } else if ("transform".equals(t.type())) {
+                // Apply UI transformations (rotation, mirror)
+                applyUITransformation(transformationName);
+            }
+        }
+        
+        imageView.setImage(currentImage);
+        updateStatus("✓ Transformations loaded and applied");
+    }
+
+    /**
+     * Apply a filter by name.
+     */
+    private Image applyFilterByName(String filterName, Image image) {
+        Filter filter = null;
+        
+        switch (filterName) {
+            case "Sepia":
+                filter = new SepiaFilter();
+                break;
+            case "NoireBlanc":
+                filter = new NoireBlanc();
+                break;
+            case "RGBSwap":
+                filter = new RGBSwapFilter();
+                break;
+            case "Prewitt":
+                filter = new PrewittFilter();
+                break;
+            case "Encryption":
+                // Cannot reapply encryption without password
+                return image;
+            case "Decryption":
+                // Cannot reapply decryption without password
+                return image;
+            default:
+                return image;
+        }
+        
+        if (filter != null) {
+            return filter.apply(image);
+        }
+        return image;
+    }
+
+    /**
+     * Apply UI transformations (rotation, mirror).
+     */
+    private void applyUITransformation(String transformationName) {
+        if (imageView == null) {
+            return;
+        }
+        
+        switch (transformationName) {
+            case "RotationDroite":
+                imageView.setRotate(imageView.getRotate() + 90);
+                break;
+            case "RotateGauche":
+                imageView.setRotate(imageView.getRotate() - 90);
+                break;
+            case "SymmetrieHorizontale":
+                imageView.setScaleX(imageView.getScaleX() * -1);
+                break;
+            case "SymmetrieVerticale":
+                imageView.setScaleY(imageView.getScaleY() * -1);
+                break;
         }
     }
 
