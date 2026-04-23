@@ -49,14 +49,16 @@ public class DecryptionFilter implements Filter {
             encryptedPixels[i] = reader.getColor(x, y);
         }
 
-        // Reverse the shuffling: map encrypted position back to original
+        // Reverse the shuffling: for each shuffled position, find where it came from
         WritableImage result = new WritableImage(width, height);
         PixelWriter writer = result.getPixelWriter();
-        for (int newIndex = 0; newIndex < totalPixels; newIndex++) {
-            int originalIndex = indices.get(newIndex);
+        for (int shuffledIndex = 0; shuffledIndex < totalPixels; shuffledIndex++) {
+            int originalIndex = indices.get(shuffledIndex);
+            int newX = shuffledIndex % width;
+            int newY = shuffledIndex / width;
             int originalX = originalIndex % width;
             int originalY = originalIndex / width;
-            writer.setColor(originalX, originalY, encryptedPixels[newIndex]);
+            writer.setColor(originalX, originalY, encryptedPixels[shuffledIndex]);
         }
 
         return result;
