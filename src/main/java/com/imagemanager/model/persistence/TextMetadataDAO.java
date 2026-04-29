@@ -8,87 +8,87 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Text-based metadata persistence.
- * Stores metadata in a simple, human-readable text format.
+ * Persistence des metadonnees en texte.
+ * Stocke les donnees dans un format simple et lisible.
  */
 public class TextMetadataDAO implements MetadataDAO {
-    private static final String METADATA_FILE = "metadata.txt";
+    private static final String FICHIER_METADONNEES = "metadata.txt";
 
     @Override
-    public void saveMetadata(Map<String, ImageMetadata> allMetadata) throws IOException {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(METADATA_FILE))) {
-            for (ImageMetadata metadata : allMetadata.values()) {
-                writer.write("IMAGE: " + metadata.getImagePath());
-                writer.newLine();
+    public void saveMetadata(Map<String, ImageMetadata> toutesLesMetadonnees) throws IOException {
+        try (BufferedWriter ecrivain = new BufferedWriter(new FileWriter(FICHIER_METADONNEES))) {
+            for (ImageMetadata metadonnees : toutesLesMetadonnees.values()) {
+                ecrivain.write("IMAGE: " + metadonnees.getImagePath());
+                ecrivain.newLine();
 
-                // Write tags
-                writer.write("TAGS: ");
-                for (Tag tag : metadata.getTags()) {
-                    writer.write(tag.value());
-                    writer.write("|");
+                // Ecrit les tags.
+                ecrivain.write("TAGS: ");
+                for (Tag etiquette : metadonnees.getTags()) {
+                    ecrivain.write(etiquette.valeur());
+                    ecrivain.write("|");
                 }
-                writer.newLine();
+                ecrivain.newLine();
 
-                // Write transformations
-                for (Transformation t : metadata.getTransformations()) {
-                    writer.write("TRANSFORM: " + t.name() + " " + t.type());
-                    writer.newLine();
+                // Ecrit les transforms.
+                for (Transformation transformation : metadonnees.getTransformations()) {
+                    ecrivain.write("TRANSFORM: " + transformation.nom() + " " + transformation.typeTransformation());
+                    ecrivain.newLine();
                 }
 
-                writer.write("---");
-                writer.newLine();
+                ecrivain.write("---");
+                ecrivain.newLine();
             }
         }
     }
 
     @Override
     public Map<String, ImageMetadata> loadMetadata() throws IOException {
-        Map<String, ImageMetadata> result = new HashMap<>();
-        File file = new File(METADATA_FILE);
-        if (!file.exists()) {
-            return result;
+        Map<String, ImageMetadata> resultat = new HashMap<>();
+        File fichier = new File(FICHIER_METADONNEES);
+        if (!fichier.exists()) {
+            return resultat;
         }
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(METADATA_FILE))) {
-            String line;
-            ImageMetadata current = null;
+        try (BufferedReader lecteur = new BufferedReader(new FileReader(FICHIER_METADONNEES))) {
+            String ligne;
+            ImageMetadata courant = null;
 
-            while ((line = reader.readLine()) != null) {
-                if (line.startsWith("IMAGE: ")) {
-                    String path = line.substring(7);
-                    current = new ImageMetadata(path);
-                    result.put(path, current);
-                } else if (line.startsWith("TAGS: ") && current != null) {
-                    String tags = line.substring(6);
-                    if (!tags.isEmpty()) {
-                        for (String tag : tags.split("\\|")) {
-                            if (!tag.isEmpty()) {
-                                current.getTags().add(new Tag(tag));
+            while ((ligne = lecteur.readLine()) != null) {
+                if (ligne.startsWith("IMAGE: ")) {
+                    String cheminImage = ligne.substring(7);
+                    courant = new ImageMetadata(cheminImage);
+                    resultat.put(cheminImage, courant);
+                } else if (ligne.startsWith("TAGS: ") && courant != null) {
+                    String etiquettes = ligne.substring(6);
+                    if (!etiquettes.isEmpty()) {
+                        for (String etiquette : etiquettes.split("\\|")) {
+                            if (!etiquette.isEmpty()) {
+                                courant.getTags().add(new Tag(etiquette));
                             }
                         }
                     }
-                } else if (line.startsWith("TRANSFORM: ") && current != null) {
-                    String[] parts = line.substring(11).split(" ", 2);
-                    if (parts.length >= 2) {
-                        current.getTransformations().add(new Transformation(parts[0], parts[1]));
+                } else if (ligne.startsWith("TRANSFORM: ") && courant != null) {
+                    String[] parties = ligne.substring(11).split(" ", 2);
+                    if (parties.length >= 2) {
+                        courant.getTransformations().add(new Transformation(parties[0], parties[1]));
                     }
                 }
             }
         }
-        return result;
+        return resultat;
     }
 
     @Override
-    public ImageMetadata getMetadata(String imagePath) throws IOException {
-        Map<String, ImageMetadata> all = loadMetadata();
-        return all.getOrDefault(imagePath, new ImageMetadata(imagePath));
+    public ImageMetadata getMetadata(String cheminImage) throws IOException {
+        Map<String, ImageMetadata> toutesLesMetadonnees = loadMetadata();
+        return toutesLesMetadonnees.getOrDefault(cheminImage, new ImageMetadata(cheminImage));
     }
 
     @Override
-    public void saveMetadataForImage(String imagePath, ImageMetadata metadata) throws IOException {
-        Map<String, ImageMetadata> all = loadMetadata();
-        all.put(imagePath, metadata);
-        saveMetadata(all);
+    public void saveMetadataForImage(String cheminImage, ImageMetadata metadonnees) throws IOException {
+        Map<String, ImageMetadata> toutesLesMetadonnees = loadMetadata();
+        toutesLesMetadonnees.put(cheminImage, metadonnees);
+        saveMetadata(toutesLesMetadonnees);
     }
 }
 

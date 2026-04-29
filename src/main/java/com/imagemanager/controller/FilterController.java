@@ -17,123 +17,123 @@ import java.util.function.Supplier;
 
 public class FilterController {
 
-    // Injected from filter.fxml
+    // Champs relies a filter.fxml
     @FXML private Label panelStatusLabel;
     @FXML private Label tagsLabel;
     @FXML private TextField passwordField;
     @FXML private TextField tagInputField;
 
-    // Injected from MainController
-    private ImageView imageView;
-    private Label mainStatusLabel;
-    private LibraryController libraryController;
+    // Champs relies au controleur principal
+    private ImageView vueImage;
+    private Label labelStatutPrincipal;
+    private LibraryController controleurBibliotheque;
 
-    private Image originalImage;
-    private String currentImagePath;
-    private MetadataManager metadataManager;
+    private Image imageOriginale;
+    private String cheminImageCourant;
+    private MetadataManager gestionnaireMetadonnees;
 
-    private boolean replaying = false;
+    private boolean relectureEnCours = false;
 
     @FXML
     public void initialize() {
-        metadataManager = new MetadataManager(new JsonMetadataDAO());
+        gestionnaireMetadonnees = new MetadataManager(new JsonMetadataDAO());
         updateStatus("No image loaded.");
     }
 
-    // ---- Public API used by MainController / LibraryController ----
+    // ---- API partagee ----
 
     public void setImageView(ImageView iv) {
-        this.imageView = iv;
+        this.vueImage = iv;
     }
 
     public void setLibraryController(LibraryController libraryController) {
-        this.libraryController = libraryController;
+        this.controleurBibliotheque = libraryController;
     }
 
-    /** Updates the top status bar in main.fxml (labelStatut). */
+    /** Met a jour l'etat principal. */
     public void setMainStatusLabel(Label label) {
-        this.mainStatusLabel = label;
+        this.labelStatutPrincipal = label;
     }
 
-    public void loadImageFromPath(String absolutePath) {
-        if (absolutePath == null || absolutePath.isBlank()) {
+    public void loadImageFromPath(String cheminAbsolu) {
+        if (cheminAbsolu == null || cheminAbsolu.isBlank()) {
             updateStatus("Error: invalid path");
             return;
         }
 
-        File file = new File(absolutePath);
-        if (!file.exists()) {
+        File fichier = new File(cheminAbsolu);
+        if (!fichier.exists()) {
             updateStatus("Error: file not found");
             return;
         }
 
-        Image image = new Image(file.toURI().toString());
-        this.originalImage = image;
-        this.currentImagePath = absolutePath;
+        Image imageChargee = new Image(fichier.toURI().toString());
+        this.imageOriginale = imageChargee;
+        this.cheminImageCourant = cheminAbsolu;
 
-        if (imageView != null) {
-            imageView.setImage(image);
+        if (vueImage != null) {
+            vueImage.setImage(imageChargee);
             resetViewTransforms();
         }
 
-        loadAndApplyTransformations(absolutePath);
+        loadAndApplyTransformations(cheminAbsolu);
         loadTags();
 
-        updateStatus("Loaded: " + file.getName());
+        updateStatus("Loaded: " + fichier.getName());
     }
 
-    public void loadAndApplyTransformations(String imagePath) {
-        if (imagePath == null || originalImage == null || imageView == null) return;
+    public void loadAndApplyTransformations(String cheminImage) {
+        if (cheminImage == null || imageOriginale == null || vueImage == null) return;
 
-        List<Transformation> transformations = metadataManager.getTransformations(imagePath);
+        List<Transformation> transformations = gestionnaireMetadonnees.getTransformations(cheminImage);
         if (transformations == null || transformations.isEmpty()) return;
 
-        replaying = true;
+        relectureEnCours = true;
         try {
-            imageView.setImage(originalImage);
+            vueImage.setImage(imageOriginale);
             resetViewTransforms();
 
-            for (Transformation t : transformations) {
-                if (t == null) continue;
+            for (Transformation transformation : transformations) {
+                if (transformation == null) continue;
 
-                // Security transforms can’t be replayed (password is NOT stored by design)
-                if ("security".equalsIgnoreCase(t.type())) {
+                // Pas de relecture pour la securite.
+                if ("security".equalsIgnoreCase(transformation.typeTransformation())) {
                     continue;
                 }
 
-                if ("transform".equalsIgnoreCase(t.type())) {
-                    applyUITransformation(t.name());
+                if ("transform".equalsIgnoreCase(transformation.typeTransformation())) {
+                    applyUITransformation(transformation.nom());
                 } else {
-                    // Default to filter
-                    applyFilterByName(t.name());
+                    // Sinon, on tente un filtre.
+                    applyFilterByName(transformation.nom());
                 }
             }
         } finally {
-            replaying = false;
+            relectureEnCours = false;
         }
     }
 
-    // ---- Filters (recorded as type=filter) ----
+    // ---- Filtres ----
 
-    private void applyFilter(String name, Supplier<Filter> filterSupplier) {
-        if (imageView == null || imageView.getImage() == null) {
+    private void applyFilter(String nom, Supplier<Filter> fournisseurFiltre) {
+        if (vueImage == null || vueImage.getImage() == null) {
             updateStatus("Error: No image loaded");
             return;
         }
-        Filter filter = filterSupplier.get();
-        imageView.setImage(filter.apply(imageView.getImage()));
-        recordAction(name, "filter");
-        updateStatus("✓ " + name + " applied");
+        Filter filtre = fournisseurFiltre.get();
+        vueImage.setImage(filtre.apply(vueImage.getImage()));
+        recordAction(nom, "filter");
+        updateStatus("✓ " + nom + " applied");
     }
 
-    private void applyFilterByName(String name) {
-        if (name == null) return;
-        switch (name) {
+    private void applyFilterByName(String nom) {
+        if (nom == null) return;
+        switch (nom) {
             case "Sepia" -> applyFilter("Sepia", SepiaFilter::new);
             case "NoireBlanc" -> applyFilter("NoireBlanc", NoireBlanc::new);
             case "RGBSwap" -> applyFilter("RGBSwap", RGBSwapFilter::new);
             case "Prewitt" -> applyFilter("Prewitt", PrewittFilter::new);
-            default -> { /* ignore unknown */ }
+            default -> { /* ignore inconnu */ }
         }
     }
 
@@ -142,50 +142,50 @@ public class FilterController {
     @FXML public void handleRGBSwapFilter() { applyFilter("RGBSwap", RGBSwapFilter::new); }
     @FXML public void handlePrewittFilter() { applyFilter("Prewitt", PrewittFilter::new); }
 
-    // ---- UI transforms (recorded as type=transform) ----
+    // ---- Transform UI ----
 
     @FXML public void RotationDroite() { rotate(90, "RotationDroite"); }
     @FXML public void RotateGauche() { rotate(-90, "RotateGauche"); }
     @FXML public void SymmetrieHorizontale() { flipX("SymmetrieHorizontale"); }
     @FXML public void SymmetrieVerticale() { flipY("SymmetrieVerticale"); }
 
-    private void applyUITransformation(String name) {
-        if (name == null) return;
-        switch (name) {
+    private void applyUITransformation(String nom) {
+        if (nom == null) return;
+        switch (nom) {
             case "RotationDroite" -> rotate(90, "RotationDroite");
             case "RotateGauche" -> rotate(-90, "RotateGauche");
             case "SymmetrieHorizontale" -> flipX("SymmetrieHorizontale");
             case "SymmetrieVerticale" -> flipY("SymmetrieVerticale");
-            default -> { /* ignore unknown */ }
+            default -> { /* ignore inconnu */ }
         }
     }
 
-    private void rotate(double angle, String name) {
-        if (imageView == null) return;
-        imageView.setRotate(imageView.getRotate() + angle);
-        recordAction(name, "transform");
+    private void rotate(double angle, String nom) {
+        if (vueImage == null) return;
+        vueImage.setRotate(vueImage.getRotate() + angle);
+        recordAction(nom, "transform");
     }
 
-    private void flipX(String name) {
-        if (imageView == null) return;
-        imageView.setScaleX(imageView.getScaleX() * -1);
-        recordAction(name, "transform");
+    private void flipX(String nom) {
+        if (vueImage == null) return;
+        vueImage.setScaleX(vueImage.getScaleX() * -1);
+        recordAction(nom, "transform");
     }
 
-    private void flipY(String name) {
-        if (imageView == null) return;
-        imageView.setScaleY(imageView.getScaleY() * -1);
-        recordAction(name, "transform");
+    private void flipY(String nom) {
+        if (vueImage == null) return;
+        vueImage.setScaleY(vueImage.getScaleY() * -1);
+        recordAction(nom, "transform");
     }
 
     private void resetViewTransforms() {
-        if (imageView == null) return;
-        imageView.setRotate(0);
-        imageView.setScaleX(1);
-        imageView.setScaleY(1);
+        if (vueImage == null) return;
+        vueImage.setRotate(0);
+        vueImage.setScaleX(1);
+        vueImage.setScaleY(1);
     }
 
-    // ---- Security (NOT replayable) ----
+    // ---- Securite ----
 
     @FXML
     public void handleEncrypt() {
@@ -197,42 +197,42 @@ public class FilterController {
         processSecurity("Decryption", DecryptionFilter::new);
     }
 
-    private void processSecurity(String name, java.util.function.Function<String, Filter> filterFactory) {
-        if (imageView == null || imageView.getImage() == null) {
+    private void processSecurity(String nom, java.util.function.Function<String, Filter> usineFiltre) {
+        if (vueImage == null || vueImage.getImage() == null) {
             updateStatus("Error: No image loaded");
             return;
         }
 
-        String pass = passwordField != null ? passwordField.getText() : null;
-        if (pass == null || pass.isBlank()) {
+        String motDePasse = passwordField != null ? passwordField.getText() : null;
+        if (motDePasse == null || motDePasse.isBlank()) {
             updateStatus("Error: Enter password");
             return;
         }
 
-        Filter filter = filterFactory.apply(pass);
-        imageView.setImage(filter.apply(imageView.getImage()));
-        recordAction(name, "security");
-        updateStatus("✓ " + name + " applied");
+        Filter filtre = usineFiltre.apply(motDePasse);
+        vueImage.setImage(filtre.apply(vueImage.getImage()));
+        recordAction(nom, "security");
+        updateStatus("✓ " + nom + " applied");
 
         if (passwordField != null) passwordField.clear();
     }
 
-    // ---- Tags / metadata ----
+    // ---- Tags / meta ----
 
-    private void recordAction(String name, String type) {
-        if (replaying) return;
-        if (currentImagePath != null) {
-            metadataManager.addTransformation(currentImagePath, new Transformation(name, type));
+    private void recordAction(String nom, String typeTransformation) {
+        if (relectureEnCours) return;
+        if (cheminImageCourant != null) {
+            gestionnaireMetadonnees.addTransformation(cheminImageCourant, new Transformation(nom, typeTransformation));
         }
     }
 
     @FXML
     public void handleAddTag() {
         if (tagInputField == null) return;
-        String tag = tagInputField.getText() != null ? tagInputField.getText().trim() : "";
+        String etiquette = tagInputField.getText() != null ? tagInputField.getText().trim() : "";
 
-        if (currentImagePath != null && !tag.isEmpty()) {
-            metadataManager.addTag(currentImagePath, new Tag(tag));
+        if (cheminImageCourant != null && !etiquette.isEmpty()) {
+            gestionnaireMetadonnees.addTag(cheminImageCourant, new Tag(etiquette));
             tagInputField.clear();
             loadTags();
             updateStatus("Tag added");
@@ -241,16 +241,16 @@ public class FilterController {
 
     @FXML
     public void loadTags() {
-        if (currentImagePath == null || tagsLabel == null) return;
-        var tags = metadataManager.getTags(currentImagePath);
-        String text = tags.isEmpty() ? "(none)" : String.join(", ", tags.stream().map(Tag::value).toList());
-        tagsLabel.setText("Tags: " + text);
+        if (cheminImageCourant == null || tagsLabel == null) return;
+        var etiquettes = gestionnaireMetadonnees.getTags(cheminImageCourant);
+        String texte = etiquettes.isEmpty() ? "(none)" : String.join(", ", etiquettes.stream().map(Tag::valeur).toList());
+        tagsLabel.setText("Tags: " + texte);
     }
 
     @FXML
     public void handleReset() {
-        if (originalImage != null && imageView != null) {
-            imageView.setImage(originalImage);
+        if (imageOriginale != null && vueImage != null) {
+            vueImage.setImage(imageOriginale);
             resetViewTransforms();
             updateStatus("Reset to original");
         }
@@ -258,15 +258,15 @@ public class FilterController {
 
     @FXML
     public void handleSaveMetadata() {
-        metadataManager.saveAll();
+        gestionnaireMetadonnees.saveAll();
         updateStatus("Saved");
-        if (libraryController != null) {
-            libraryController.refresh();
+        if (controleurBibliotheque != null) {
+            controleurBibliotheque.refresh();
         }
     }
 
-    private void updateStatus(String msg) {
-        if (panelStatusLabel != null) panelStatusLabel.setText(msg);
-        if (mainStatusLabel != null) mainStatusLabel.setText(msg);
+    private void updateStatus(String message) {
+        if (panelStatusLabel != null) panelStatusLabel.setText(message);
+        if (labelStatutPrincipal != null) labelStatutPrincipal.setText(message);
     }
 }

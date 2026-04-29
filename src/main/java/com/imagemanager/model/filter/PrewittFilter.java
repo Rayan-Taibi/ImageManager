@@ -9,64 +9,64 @@ import javafx.scene.paint.Color;
 public class PrewittFilter extends AbstractFilter {
     
     @Override
-    public Image apply(Image source) {
-        int width = (int) source.getWidth();
-        int height = (int) source.getHeight();
+    public Image apply(Image imageSource) {
+        int largeur = (int) imageSource.getWidth();
+        int hauteur = (int) imageSource.getHeight();
         
-        WritableImage result = new WritableImage(width, height);
-        PixelReader reader = source.getPixelReader();
-        PixelWriter writer = result.getPixelWriter();
+        WritableImage imageResultante = new WritableImage(largeur, hauteur);
+        PixelReader lecteurPixels = imageSource.getPixelReader();
+        PixelWriter ecrivainPixels = imageResultante.getPixelWriter();
         
-        // Prewitt kernels for edge detection
-        // Horizontal kernel (detects vertical edges)
-        int[][] kernelX = {
+        // Noyaux Prewitt pour les contours.
+        // Axe X = bords verticaux.
+        int[][] noyauX = {
             {-1, 0, 1},
             {-1, 0, 1},
             {-1, 0, 1}
         };
         
-        // Vertical kernel (detects horizontal edges)
-        int[][] kernelY = {
+        // Axe Y = bords horizontaux.
+        int[][] noyauY = {
             {-1, -1, -1},
             {0, 0, 0},
             {1, 1, 1}
         };
         
-        for (int y = 0; y < height; y++) {
-            for (int x = 0; x < width; x++) {
-                double edgeX = 0;
-                double edgeY = 0;
+        for (int ligne = 0; ligne < hauteur; ligne++) {
+            for (int colonne = 0; colonne < largeur; colonne++) {
+                double bordX = 0;
+                double bordY = 0;
                 
-                // Apply kernels to the 3x3 neighborhood
-                for (int ky = -1; ky <= 1; ky++) {
-                    for (int kx = -1; kx <= 1; kx++) {
-                        int px = Math.min(width - 1, Math.max(0, x + kx));
-                        int py = Math.min(height - 1, Math.max(0, y + ky));
+                // Compare le voisinage 3x3.
+                for (int decalageY = -1; decalageY <= 1; decalageY++) {
+                    for (int decalageX = -1; decalageX <= 1; decalageX++) {
+                        int pixelX = Math.min(largeur - 1, Math.max(0, colonne + decalageX));
+                        int pixelY = Math.min(hauteur - 1, Math.max(0, ligne + decalageY));
                         
-                        Color color = reader.getColor(px, py);
-                        // Convert to grayscale
-                        double gray = (color.getRed() + color.getGreen() + color.getBlue()) / 3.0;
+                        Color couleur = lecteurPixels.getColor(pixelX, pixelY);
+                        // Passage en gris.
+                        double gris = (couleur.getRed() + couleur.getGreen() + couleur.getBlue()) / 3.0;
                         
-                        edgeX += gray * kernelX[ky + 1][kx + 1];
-                        edgeY += gray * kernelY[ky + 1][kx + 1];
+                        bordX += gris * noyauX[decalageY + 1][decalageX + 1];
+                        bordY += gris * noyauY[decalageY + 1][decalageX + 1];
                     }
                 }
                 
-                // Calculate edge magnitude
-                double magnitude = Math.sqrt(edgeX * edgeX + edgeY * edgeY);
-                magnitude = Math.min(1.0, magnitude);
+                // Intensite du contour.
+                double intensite = Math.sqrt(bordX * bordX + bordY * bordY);
+                intensite = Math.min(1.0, intensite);
                 
-                writer.setColor(x, y, new Color(magnitude, magnitude, magnitude, reader.getColor(x, y).getOpacity()));
+                ecrivainPixels.setColor(colonne, ligne, new Color(intensite, intensite, intensite, lecteurPixels.getColor(colonne, ligne).getOpacity()));
             }
         }
         
-        return result;
+        return imageResultante;
     }
     
     @Override
-    protected Color transformColor(Color color) {
-        // Not used since we override apply()
-        return color;
+    protected Color transformColor(Color couleur) {
+        // Inutile ici, apply() est redefini.
+        return couleur;
     }
     
     @Override

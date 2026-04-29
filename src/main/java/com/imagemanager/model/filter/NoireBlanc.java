@@ -3,9 +3,9 @@ import javafx.scene.paint.Color;
 public class NoireBlanc extends AbstractFilter {
 
     @Override
-    protected Color transformColor(Color color) {
-        double gray = (color.getRed() + color.getGreen() + color.getBlue()) / 3.0;
-        return new Color(gray, gray, gray, color.getOpacity());
+    protected Color transformColor(Color couleur) {
+        double gris = (couleur.getRed() + couleur.getGreen() + couleur.getBlue()) / 3.0;
+        return new Color(gris, gris, gris, couleur.getOpacity());
     }
 
 

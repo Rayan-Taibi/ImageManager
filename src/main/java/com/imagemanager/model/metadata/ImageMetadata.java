@@ -5,14 +5,19 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
- * Metadata for an image including path, tags, and transformation history.
+ * Metadonnees d'une image: chemin, etiquettes et historique des transformations.
+ *
+ * Note : les annotations `@JsonProperty` garantissent la compatibilité du format
+ * JSON (clé `imagePath`) avec les versions antérieures si le nom du champ a été
+ * modifié dans le code.on doit  Eviter de changer la clé JSON si on eut rester
+ * compatible avec les anciens fichiers `metadata.json`.
  */
 public class ImageMetadata {
     @JsonProperty("imagePath")
-    private String imagePath;
+    private String cheminImage;
 
     @JsonProperty("tags")
-    private List<Tag> tags = new ArrayList<>();
+    private List<Tag> etiquettes = new ArrayList<>();
 
     @JsonProperty("transformations")
     private List<Transformation> transformations = new ArrayList<>();
@@ -20,24 +25,24 @@ public class ImageMetadata {
     public ImageMetadata() {
     }
 
-    public ImageMetadata(String imagePath) {
-        this.imagePath = imagePath;
+    public ImageMetadata(String cheminImage) {
+        this.cheminImage = cheminImage;
     }
 
     public String getImagePath() {
-        return imagePath;
+        return cheminImage;
     }
 
-    public void setImagePath(String imagePath) {
-        this.imagePath = imagePath;
+    public void setImagePath(String cheminImage) {
+        this.cheminImage = cheminImage;
     }
 
     public List<Tag> getTags() {
-        return tags;
+        return etiquettes;
     }
 
-    public void setTags(List<Tag> tags) {
-        this.tags = tags != null ? tags : new ArrayList<>();
+    public void setTags(List<Tag> etiquettes) {
+        this.etiquettes = etiquettes != null ? etiquettes : new ArrayList<>();
     }
 
     public List<Transformation> getTransformations() {
@@ -51,8 +56,8 @@ public class ImageMetadata {
     @Override
     public String toString() {
         return "ImageMetadata{" +
-                "imagePath='" + imagePath + '\'' +
-                ", tags=" + tags +
+            "imagePath='" + cheminImage + '\'' +
+            ", tags=" + etiquettes +
                 ", transformations=" + transformations +
                 '}';
     }

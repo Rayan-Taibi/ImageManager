@@ -8,30 +8,35 @@ import javafx.scene.paint.Color;
 
 
 public abstract class AbstractFilter implements Filter {
+    /**
+     * Filtre générique basé sur une transformation pixel-par-pixel.
+     *
+     * Comportement : lit chaque pixel de l'image source, appelle
+     * `transformColor` (implémenté par les sous-classes) puis écrit le pixel
+     * transformé dans une nouvelle image. C'est simple et fiable mais coûteux
+     * en CPU pour les grandes images — approprié pour des usages desktop.
+     */
     @Override
-    public Image apply(Image source){
-        int width = (int)source.getWidth();
-        int height = (int)source.getHeight();
+    public Image apply(Image imageSource) {
+        int largeur = (int) imageSource.getWidth();
+        int hauteur = (int) imageSource.getHeight();
 
-        //WritableImage  --> cette classe nous permet de créer une nouvelle image modifiable (cest la résultat de la modification)
-        //PixelReader --> pour lire les pixels de l'image source
-        //PixelWriter --> pour écrire les pixels dans la nouvelle image
+        // Img modifiable, puis lecture/ecriture pixel par pixel.
 
-        WritableImage resultat = new WritableImage(width , height);
-        PixelReader reader = source.getPixelReader();
-        PixelWriter Writer = resultat.getPixelWriter();
+        WritableImage imageResultante = new WritableImage(largeur, hauteur);
+        PixelReader lecteurPixels = imageSource.getPixelReader();
+        PixelWriter ecrivainPixels = imageResultante.getPixelWriter();
 
-        for(int i = 0 ; i < height ; i++ ){
-            for(int j = 0 ; j < width ; j++){
-                Color coleurOriginale = reader.getColor(j, i);
-                Color coleurTransformee = transformColor(coleurOriginale);
-                Writer.setColor(j, i, coleurTransformee);
+        for (int ligne = 0; ligne < hauteur; ligne++) {
+            for (int colonne = 0; colonne < largeur; colonne++) {
+                Color couleurOriginale = lecteurPixels.getColor(colonne, ligne);
+                Color couleurTransformee = transformColor(couleurOriginale);
+                ecrivainPixels.setColor(colonne, ligne, couleurTransformee);
             }
         }
-        return resultat;
-
+        return imageResultante;
     }
 
-    protected abstract Color transformColor(Color color);
+    protected abstract Color transformColor(Color couleur);
 
 }

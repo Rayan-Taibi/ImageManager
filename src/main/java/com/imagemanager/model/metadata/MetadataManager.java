@@ -7,131 +7,118 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Manages metadata operations (CRUD) for images.
- * Coordinates with MetadataDAO for persistence.
+ * Gestionnaire de métadonnées des images.
+ *
+ * Ce composant sert de cache en mémoire et de façade vers un `MetadataDAO` pour
+ * la lecture/écriture. Il fournit des méthodes pratiques pour :
+ * - ajouter/consulter des tags et transformations,
+ * - sauvegarder soit une fiche, soit l'ensemble des métadonnées.
+ *
+ * Implémentation :
+ * - charge tout au démarrage via `loadAll()` puis conserve un `Map` en mémoire.
+ * - les opérations mutantes modifient ce cache ; il faut appeler `saveAll()` ou
+ *   `save()` pour persister selon le besoin.
  */
 public class MetadataManager {
-    private final MetadataDAO dao;
-    private Map<String, ImageMetadata> metadata;
+    private final MetadataDAO sourceDeDonnees;
+    private Map<String, ImageMetadata> metadonnees;
 
-    public MetadataManager(MetadataDAO dao) {
-        this.dao = dao;
-        this.metadata = new HashMap<>();
+    public MetadataManager(MetadataDAO sourceDeDonnees) {
+        this.sourceDeDonnees = sourceDeDonnees;
+        this.metadonnees = new HashMap<>();
         loadAll();
     }
 
-    /**
-     * Load all metadata from storage.
-     */
+
+
+    /** Charge tout depuis le stockage. */
     private void loadAll() {
         try {
-            metadata = dao.loadMetadata();
+            metadonnees = sourceDeDonnees.loadMetadata();
         } catch (IOException e) {
-            System.err.println("Error loading metadata: " + e.getMessage());
-            metadata = new HashMap<>();
+            System.err.println("Erreur lors du chargement des metadonnees: " + e.getMessage());
+            metadonnees = new HashMap<>();
         }
     }
 
-    /**
-     * Get or create metadata for an image path.
-     */
-    private ImageMetadata getOrCreateMetadata(String imagePath) {
-        return metadata.computeIfAbsent(imagePath, path -> new ImageMetadata(path));
+    /** Recupere ou cree la fiche image. */
+    private ImageMetadata getOrCreateMetadata(String cheminImage) {
+        return metadonnees.computeIfAbsent(cheminImage, chemin -> new ImageMetadata(chemin));
     }
 
-    /**
-     * Add a transformation to an image's metadata.
-     */
-    public void addTransformation(String imagePath, Transformation transformation) {
-        if (imagePath == null || transformation == null) return;
-        ImageMetadata meta = getOrCreateMetadata(imagePath);
-        meta.getTransformations().add(transformation);
+    /** Ajoute une transformation. */
+    public void addTransformation(String cheminImage, Transformation transformation) {
+        if (cheminImage == null || transformation == null) return;
+        ImageMetadata metadonneesImage = getOrCreateMetadata(cheminImage);
+        metadonneesImage.getTransformations().add(transformation);
     }
 
-    /**
-     * Add a tag to an image's metadata.
-     */
-    public void addTag(String imagePath, Tag tag) {
-        if (imagePath == null || tag == null) return;
-        ImageMetadata meta = getOrCreateMetadata(imagePath);
-        if (!meta.getTags().contains(tag)) {
-            meta.getTags().add(tag);
+    /** Ajoute un tag. */
+    public void addTag(String cheminImage, Tag tag) {
+        if (cheminImage == null || tag == null) return;
+        ImageMetadata metadonneesImage = getOrCreateMetadata(cheminImage);
+        if (!metadonneesImage.getTags().contains(tag)) {
+            metadonneesImage.getTags().add(tag);
         }
     }
 
-    /**
-     * Get all tags for an image.
-     */
-    public List<Tag> getTags(String imagePath) {
-        if (imagePath == null) return List.of();
-        ImageMetadata meta = metadata.get(imagePath);
-        return meta != null ? meta.getTags() : List.of();
+    /** Retourne les tags d'une image. */
+    public List<Tag> getTags(String cheminImage) {
+        if (cheminImage == null) return List.of();
+        ImageMetadata metadonneesImage = metadonnees.get(cheminImage);
+        return metadonneesImage != null ? metadonneesImage.getTags() : List.of();
     }
 
-    /**
-     * Get all transformations for an image.
-     */
-    public List<Transformation> getTransformations(String imagePath) {
-        if (imagePath == null) return List.of();
-        ImageMetadata meta = metadata.get(imagePath);
-        return meta != null ? meta.getTransformations() : List.of();
+    /** Retourne les transformations d'une image. */
+    public List<Transformation> getTransformations(String cheminImage) {
+        if (cheminImage == null) return List.of();
+        ImageMetadata metadonneesImage = metadonnees.get(cheminImage);
+        return metadonneesImage != null ? metadonneesImage.getTransformations() : List.of();
     }
 
-    /**
-     * Save all metadata to storage.
-     */
+    /** Sauveg tout. */
     public void saveAll() {
         try {
-            dao.saveMetadata(metadata);
+            sourceDeDonnees.saveMetadata(metadonnees);
         } catch (IOException e) {
-            System.err.println("Error saving metadata: " + e.getMessage());
+            System.err.println("Erreur lors de la sauvegarde des metadonnees: " + e.getMessage());
         }
     }
 
-    /**
-     * Save metadata for a single image.
-     */
-    public void save(String imagePath) {
-        if (imagePath == null) return;
-        ImageMetadata meta = metadata.get(imagePath);
-        if (meta != null) {
+    /** Sauveg une seule image. */
+    public void save(String cheminImage) {
+        if (cheminImage == null) return;
+        ImageMetadata metadonneesImage = metadonnees.get(cheminImage);
+        if (metadonneesImage != null) {
             try {
-                dao.saveMetadataForImage(imagePath, meta);
+                sourceDeDonnees.saveMetadataForImage(cheminImage, metadonneesImage);
             } catch (IOException e) {
-                System.err.println("Error saving metadata: " + e.getMessage());
+                System.err.println("Erreur lors de la sauvegarde des metadonnees: " + e.getMessage());
             }
         }
     }
 
-    /**
-     * Get metadata for an image.
-     */
-    public ImageMetadata getMetadata(String imagePath) {
-        if (imagePath == null) return null;
-        return metadata.get(imagePath);
+    /** Retourne la fiche image. */
+    public ImageMetadata getMetadata(String cheminImage) {
+        if (cheminImage == null) return null;
+        return metadonnees.get(cheminImage);
     }
 
-    /**
-     * Get all metadata.
-     */
+    /** Retourne tout le cache. */
     public Map<String, ImageMetadata> getAllMetadata() {
-        return new HashMap<>(metadata);
+        return new HashMap<>(metadonnees);
     }
 
-    /**
-     * Clear a specific image's metadata.
-     */
-    public void clearMetadata(String imagePath) {
-        if (imagePath != null) {
-            metadata.remove(imagePath);
+    /** Supprime la fiche image. */
+    public void clearMetadata(String cheminImage) {
+        if (cheminImage != null) {
+            metadonnees.remove(cheminImage);
         }
     }
 
-    /**
-     * Clear all metadata.
-     */
+    /** Vide le cache. */
     public void clearAll() {
-        metadata.clear();
+        metadonnees.clear();
     }
 }
 

@@ -8,11 +8,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * JSON-based metadata persistence using Jackson.
- * Stores all metadata in a single JSON file.
+ * Persistence des metadonnees au format JSON avec Jackson.
+ * Stocke toutes les metadonnees dans un seul fichier JSON.
  */
 public class JsonMetadataDAO implements MetadataDAO {
-    private static final String METADATA_FILE = "metadata.json";
+    private static final String FICHIER_METADONNEES = "metadata.json";
     private final ObjectMapper objectMapper;
 
     public JsonMetadataDAO() {
@@ -20,31 +20,31 @@ public class JsonMetadataDAO implements MetadataDAO {
     }
 
     @Override
-    public void saveMetadata(Map<String, ImageMetadata> allMetadata) throws IOException {
-        File file = new File(METADATA_FILE);
-        objectMapper.writerWithDefaultPrettyPrinter().writeValue(file, allMetadata);
+    public void saveMetadata(Map<String, ImageMetadata> toutesLesMetadonnees) throws IOException {
+        File fichier = new File(FICHIER_METADONNEES);
+        objectMapper.writerWithDefaultPrettyPrinter().writeValue(fichier, toutesLesMetadonnees);
     }
 
     @Override
     public Map<String, ImageMetadata> loadMetadata() throws IOException {
-        File file = new File(METADATA_FILE);
-        if (!file.exists()) {
+        File fichier = new File(FICHIER_METADONNEES);
+        if (!fichier.exists()) {
             return new HashMap<>();
         }
-        return objectMapper.readValue(file,
+        return objectMapper.readValue(fichier,
             objectMapper.getTypeFactory().constructMapType(HashMap.class, String.class, ImageMetadata.class));
     }
 
     @Override
-    public ImageMetadata getMetadata(String imagePath) throws IOException {
-        Map<String, ImageMetadata> allMetadata = loadMetadata();
-        return allMetadata.getOrDefault(imagePath, new ImageMetadata(imagePath));
+    public ImageMetadata getMetadata(String cheminImage) throws IOException {
+        Map<String, ImageMetadata> toutesLesMetadonnees = loadMetadata();
+        return toutesLesMetadonnees.getOrDefault(cheminImage, new ImageMetadata(cheminImage));
     }
 
     @Override
-    public void saveMetadataForImage(String imagePath, ImageMetadata metadata) throws IOException {
-        Map<String, ImageMetadata> allMetadata = loadMetadata();
-        allMetadata.put(imagePath, metadata);
-        saveMetadata(allMetadata);
+    public void saveMetadataForImage(String cheminImage, ImageMetadata metadonnees) throws IOException {
+        Map<String, ImageMetadata> toutesLesMetadonnees = loadMetadata();
+        toutesLesMetadonnees.put(cheminImage, metadonnees);
+        saveMetadata(toutesLesMetadonnees);
     }
 }

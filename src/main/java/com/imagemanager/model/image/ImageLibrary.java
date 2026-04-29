@@ -5,67 +5,70 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Manages a collection of wrapped images with metadata.
+ * Gere une collection d'images avec leurs metadonnees.
+ *
+ * Utilisé comme conteneur mémoire local pour l'application. Ne gère pas la
+ * persistance (les métadonnées sont gérées séparément par `MetadataManager`).
  */
 public class ImageLibrary {
-    private final List<ImageWrapper> images = new ArrayList<>();
+    private final List<ImageWrapper> imagesDeLaBibliotheque = new ArrayList<>();
 
     /**
-     * Add an image to the library.
+     * Ajoute une image a la bibliotheque.
      */
-    public void addImage(ImageWrapper wrapper) {
-        if (wrapper != null && !images.contains(wrapper)) {
-            images.add(wrapper);
+    public void addImage(ImageWrapper imageEmballee) {
+        if (imageEmballee != null && !imagesDeLaBibliotheque.contains(imageEmballee)) {
+            imagesDeLaBibliotheque.add(imageEmballee);
         }
     }
 
     /**
-     * Remove an image from the library.
+     * Supprime une image de la bibliotheque.
      */
-    public void removeImage(ImageWrapper wrapper) {
-        images.remove(wrapper);
+    public void removeImage(ImageWrapper imageEmballee) {
+        imagesDeLaBibliotheque.remove(imageEmballee);
     }
 
     /**
-     * Get all images in the library.
+     * Retourne toutes les images de la bibliotheque.
      */
     public List<ImageWrapper> getAllImages() {
-        return new ArrayList<>(images);
+        return new ArrayList<>(imagesDeLaBibliotheque);
     }
 
     /**
-     * Find image by path.
+     * Cherche une image par chemin.
      */
-    public ImageWrapper findByPath(String path) {
-        return images.stream()
-            .filter(img -> img.getImagePath().equals(path))
+    public ImageWrapper findByPath(String chemin) {
+        return imagesDeLaBibliotheque.stream()
+            .filter(image -> image.getImagePath().equals(chemin))
             .findFirst()
             .orElse(null);
     }
 
     /**
-     * Search images by tag (partial matching).
+     * Recherche des images par tag, avec correspondance partielle.
      */
-    public List<ImageWrapper> searchByTag(String tagSearch) {
-        String searchLower = tagSearch.toLowerCase();
-        return images.stream()
-            .filter(img -> img.getMetadata().getTags().stream()
-                .anyMatch(tag -> tag.value().toLowerCase().contains(searchLower)))
+    public List<ImageWrapper> searchByTag(String rechercheTag) {
+        String rechercheEnMinuscules = rechercheTag.toLowerCase();
+        return imagesDeLaBibliotheque.stream()
+            .filter(image -> image.getMetadata().getTags().stream()
+                .anyMatch(tag -> tag.valeur().toLowerCase().contains(rechercheEnMinuscules)))
             .collect(Collectors.toList());
     }
 
     /**
-     * Get total number of images in library.
+     * Retourne le nombre total d'images.
      */
     public int size() {
-        return images.size();
+        return imagesDeLaBibliotheque.size();
     }
 
     /**
-     * Clear all images from library.
+     * Vide la bibliotheque.
      */
     public void clear() {
-        images.clear();
+        imagesDeLaBibliotheque.clear();
     }
 }
 

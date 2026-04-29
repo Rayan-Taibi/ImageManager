@@ -14,42 +14,42 @@ import java.util.Collections;
 import java.util.List;
 
 public class DecryptionFilter implements Filter {
-    private final String password;
+    private final String motDePasse;
 
-    public DecryptionFilter(String password) {
-        this.password = password;
+    public DecryptionFilter(String motDePasse) {
+        this.motDePasse = motDePasse;
     }
 
     @Override
-    public Image apply(Image source) {
-        int width = (int) source.getWidth();
-        int height = (int) source.getHeight();
-        int totalPixels = width * height;
+    public Image apply(Image imageSource) {
+        int largeur = (int) imageSource.getWidth();
+        int hauteur = (int) imageSource.getHeight();
+        int nombreTotalPixels = largeur * hauteur;
 
-        List<Integer> indices = new ArrayList<>();
-        for (int i = 0; i < totalPixels; i++) {
-            indices.add(i);
+        List<Integer> indicesPixels = new ArrayList<>();
+        for (int indice = 0; indice < nombreTotalPixels; indice++) {
+            indicesPixels.add(indice);
         }
 
-        // Must use the EXACT same SecureRandom setup as EncryptionFilter
-        SecureRandom secureRandom = getSecureRandomFromPassword();
-        Collections.shuffle(indices, secureRandom);
+        // Meme graine que le chiffrement, sinon ca casse.
+        SecureRandom generateurAleatoireSecurise = getSecureRandomDepuisMotDePasse();
+        Collections.shuffle(indicesPixels, generateurAleatoireSecurise);
 
-        PixelReader reader = source.getPixelReader();
-        Color[] encryptedPixels = new Color[totalPixels];
-        for (int i = 0; i < totalPixels; i++) {
-            encryptedPixels[i] = reader.getColor(i % width, i / width);
+        PixelReader lecteurPixels = imageSource.getPixelReader();
+        Color[] pixelsChiffres = new Color[nombreTotalPixels];
+        for (int indice = 0; indice < nombreTotalPixels; indice++) {
+            pixelsChiffres[indice] = lecteurPixels.getColor(indice % largeur, indice / largeur);
         }
 
-        WritableImage result = new WritableImage(width, height);
-        PixelWriter writer = result.getPixelWriter();
+        WritableImage imageResultante = new WritableImage(largeur, hauteur);
+        PixelWriter ecrivainPixels = imageResultante.getPixelWriter();
 
-        for (int shuffledPos = 0; shuffledPos < totalPixels; shuffledPos++) {
-            int originalIndex = indices.get(shuffledPos);
-            writer.setColor(originalIndex % width, originalIndex / width, encryptedPixels[shuffledPos]);
+        for (int positionMelangee = 0; positionMelangee < nombreTotalPixels; positionMelangee++) {
+            int indiceOriginal = indicesPixels.get(positionMelangee);
+            ecrivainPixels.setColor(indiceOriginal % largeur, indiceOriginal / largeur, pixelsChiffres[positionMelangee]);
         }
 
-        return result;
+        return imageResultante;
     }
 
     @Override
@@ -57,14 +57,14 @@ public class DecryptionFilter implements Filter {
         return "Decryption";
     }
 
-    private SecureRandom getSecureRandomFromPassword() {
+    private SecureRandom getSecureRandomDepuisMotDePasse() {
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
-            byte[] seed = digest.digest(password.getBytes());
+            byte[] graine = digest.digest(motDePasse.getBytes());
             
-            SecureRandom sr = SecureRandom.getInstance("SHA1PRNG");
-            sr.setSeed(seed);
-            return sr;
+            SecureRandom generateur = SecureRandom.getInstance("SHA1PRNG");
+            generateur.setSeed(graine);
+            return generateur;
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException("Algorithm not available", e);
         }

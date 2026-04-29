@@ -7,6 +7,17 @@ import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 
 public class MainController {
+    /**
+     * Contrôleur principal de la fenêtre.
+     *
+     * Rôle :
+     * - Agir comme point d'entrée UI pour ouvrir des images.
+     * - Connecter les sous-contrôleurs (`FilterController`, `LibraryController`).
+     * - Déléguer le chargement d'images et exposer quelques raccourcis UI.
+     *
+     * Notes : les méthodes publiques sont utilisées depuis le FXML et par les autres
+     * contrôleurs, garder les signatures stables évite de casser les liaisons.
+     */
     @FXML
     private ImageView imageView;
 
@@ -33,25 +44,25 @@ public class MainController {
 
     @FXML
     protected void handleOpenImage() {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.getExtensionFilters().add(
+        FileChooser selecteurFichier = new FileChooser();
+        selecteurFichier.getExtensionFilters().add(
                 new FileChooser.ExtensionFilter("Images", "*.png", "*.jpg", "*.jpeg")
         );
 
-        File selectedFile = fileChooser.showOpenDialog(imageView.getScene().getWindow());
-        if (selectedFile == null) {
+        File fichierSelectionne = selecteurFichier.showOpenDialog(imageView.getScene().getWindow());
+        if (fichierSelectionne == null) {
             return;
         }
 
         if (filterController != null) {
-            filterController.loadImageFromPath(selectedFile.getAbsolutePath());
+            filterController.loadImageFromPath(fichierSelectionne.getAbsolutePath());
         }
 
-        labelStatut.setText("Image chargée : " + selectedFile.getName());
+        labelStatut.setText("Image chargée : " + fichierSelectionne.getName());
     }
-public void loadImage(String imagePath) {
+    public void loadImage(String cheminImage) {
         if (filterController != null) {
-            filterController.loadImageFromPath(imagePath);
+            filterController.loadImageFromPath(cheminImage);
         }
     }
 

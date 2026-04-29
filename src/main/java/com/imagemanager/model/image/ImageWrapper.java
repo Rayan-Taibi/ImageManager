@@ -4,16 +4,23 @@ import com.imagemanager.model.metadata.ImageMetadata;
 import javafx.scene.image.Image;
 
 /**
- * Wrapper for an Image with associated metadata.
+ * Conteneur d'image avec ses metadonnees associees.
  */
 public class ImageWrapper {
+    /**
+     * Conteneur simple pour l'image en mémoire et son chemin + métadonnées.
+     *
+     * 
+     * Remarque : le champ `cheminImage` est la référence utilisée pour
+     * lier la métadonnée persistée (ImageMetadata) à cette image en mémoire.
+     */
     private final Image image;
-    private final String imagePath;
+    private final String cheminImage;
     private final ImageMetadata metadata;
 
-    public ImageWrapper(Image image, String imagePath, ImageMetadata metadata) {
+    public ImageWrapper(Image image, String cheminImage, ImageMetadata metadata) {
         this.image = image;
-        this.imagePath = imagePath;
+        this.cheminImage = cheminImage;
         this.metadata = metadata;
     }
 
@@ -22,7 +29,7 @@ public class ImageWrapper {
     }
 
     public String getImagePath() {
-        return imagePath;
+        return cheminImage;
     }
 
     public ImageMetadata getMetadata() {
@@ -32,7 +39,7 @@ public class ImageWrapper {
     @Override
     public String toString() {
         return "ImageWrapper{" +
-                "imagePath='" + imagePath + '\'' +
+            "imagePath='" + cheminImage + '\'' +
                 ", metadata=" + metadata +
                 '}';
     }

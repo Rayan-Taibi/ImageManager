@@ -16,8 +16,7 @@ import java.io.File;
 import java.util.List;
 
 /**
- * Controller for the image library panel.
- * Handles browsing, searching, and loading images from metadata.
+ * Controle la liste des images et la recherche par tag.
  */
 public class LibraryController {
     @FXML
@@ -29,18 +28,18 @@ public class LibraryController {
     @FXML
     private Label resultCountLabel;
 
-    private MetadataManager metadataManager;
-    private MainController mainController;
-    private List<String> allImagePaths;
+    private MetadataManager gestionnaireMetadonnees;
+    private MainController controleurPrincipal;
+    private List<String> tousCheminsImages;
 
-    private final ObservableList<String> displayedPaths = FXCollections.observableArrayList();
+    private final ObservableList<String> cheminsAffiches = FXCollections.observableArrayList();
 
     @FXML
     public void initialize() {
-        metadataManager = new MetadataManager(new JsonMetadataDAO());
+        gestionnaireMetadonnees = new MetadataManager(new JsonMetadataDAO());
 
-        // Show only filename in list, but keep real absolute path as the item value
-        imageListView.setItems(displayedPaths);
+        // Nom du fichier a l'ecran, chemin complet en valeur.
+        imageListView.setItems(cheminsAffiches);
         imageListView.setCellFactory(lv -> new ListCell<>() {
             private final HBox container = new HBox();
             private final Label nameLabel = new Label();
@@ -62,93 +61,81 @@ public class LibraryController {
             }
             
             @Override
-            protected void updateItem(String path, boolean empty) {
-                super.updateItem(path, empty);
-                if (empty || path == null) {
+            protected void updateItem(String chemin, boolean empty) {
+                super.updateItem(chemin, empty);
+                if (empty || chemin == null) {
                     setGraphic(null);
                 } else {
-                    nameLabel.setText(new File(path).getName());
+                    nameLabel.setText(new File(chemin).getName());
                     setGraphic(container);
                 }
             }
         });
 
         imageListView.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
-            if (newVal != null && mainController != null) {
-                mainController.loadImage(newVal);
+            if (newVal != null && controleurPrincipal != null) {
+                controleurPrincipal.loadImage(newVal);
             }
         });
 
         loadImages();
     }
 
-    /**
-     * Set the MainController for communication.
-     */
+    /** Branche le controleur principal. */
     public void setMainController(MainController mainController) {
-        this.mainController = mainController;
+        this.controleurPrincipal = mainController;
     }
 
-    /**
-     * Load all images from metadata file.
-     */
+    /** Charge les images depuis les metadonnees. */
     private void loadImages() {
-        allImagePaths = metadataManager.getAllMetadata().keySet().stream().sorted().toList();
-        displayImages(allImagePaths);
+        tousCheminsImages = gestionnaireMetadonnees.getAllMetadata().keySet().stream().sorted().toList();
+        displayImages(tousCheminsImages);
     }
 
-    /**
-     * Display a list of image paths in the ListView.
-     */
+    /** Met a jour la liste affichee. */
     private void displayImages(List<String> paths) {
-        displayedPaths.setAll(paths);
+        cheminsAffiches.setAll(paths);
         resultCountLabel.setText("Found: " + paths.size());
     }
 
-    /**
-     * Search images by tag.
-     */
+    /** Filtre la liste avec le texte saisi. */
     @FXML
     public void handleSearch() {
-        String searchTerm = searchField.getText().trim().toLowerCase();
+        String termeRecherche = searchField.getText().trim().toLowerCase();
         
-        if (searchTerm.isEmpty()) {
-            displayImages(allImagePaths);
+        if (termeRecherche.isEmpty()) {
+            displayImages(tousCheminsImages);
             return;
         }
 
-        List<String> filtered = allImagePaths.stream()
-            .filter(path -> {
-                ImageMetadata meta = metadataManager.getMetadata(path);
-                if (meta == null) return false;
-                return meta.getTags().stream()
-                    .anyMatch(tag -> tag.value().toLowerCase().contains(searchTerm));
+        List<String> cheminsFiltres = tousCheminsImages.stream()
+            .filter(chemin -> {
+                ImageMetadata metadonnees = gestionnaireMetadonnees.getMetadata(chemin);
+                if (metadonnees == null) return false;
+                return metadonnees.getTags().stream()
+                    .anyMatch(tag -> tag.valeur().toLowerCase().contains(termeRecherche));
             })
             .toList();
 
-        displayImages(filtered);
+        displayImages(cheminsFiltres);
     }
 
-    /**
-     * Clear search and show all images.
-     */
+    /** Vide la recherche et remet toute la liste. */
     @FXML
     public void handleClearSearch() {
         searchField.clear();
-        displayImages(allImagePaths);
+        displayImages(tousCheminsImages);
     }
 
     public void refresh() {
-        metadataManager = new MetadataManager(new JsonMetadataDAO());
+        gestionnaireMetadonnees = new MetadataManager(new JsonMetadataDAO());
         loadImages();
     }
 
-    /**
-     * Delete an image from the library.
-     */
-    private void deleteImage(String imagePath) {
-        metadataManager.clearMetadata(imagePath);
-        metadataManager.saveAll();
+    /** Supprime l'image et ses metadonnees. */
+    private void deleteImage(String cheminImage) {
+        gestionnaireMetadonnees.clearMetadata(cheminImage);
+        gestionnaireMetadonnees.saveAll();
         refresh();
     }
 }

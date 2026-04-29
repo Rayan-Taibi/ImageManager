@@ -1,15 +1,15 @@
 package com.imagemanager.model.metadata;
 
 /**
- * Record representing a transformation applied to an image.
- * Immutable data holder for filter/transform operations.
+ * Enregistrement d'une transformation appliquee a une image.
+ * Donnée immuable pour les operations de filtre ou de transformation.
  */
 public record Transformation(
-    String name,
-    String type,
-    String parameter
+    String nom,
+    String typeTransformation,
+    String parametre
 ) {
-    public Transformation(String name, String type) {
-        this(name, type, null);
+    public Transformation(String nom, String typeTransformation) {
+        this(nom, typeTransformation, null);
     }
 }
